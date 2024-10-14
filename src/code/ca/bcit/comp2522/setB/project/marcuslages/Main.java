@@ -30,14 +30,15 @@ public class Main {
     }
 
     private static void playWordGame() {
-
+        System.out.println("Playing word game");
     }
 
     private static void playNumberGame() {
-
+        System.out.println("Playing number game");
     }
 
     private static void playMyGame() {
+        System.out.println("Playing my game");
     }
 
     private static char getInput() {
