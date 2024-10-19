@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -13,6 +14,13 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class World {
+
+    /* Data lines per country data in the txt file (counting the '\n'). */
+    private static final int DATA_LINES_PER_COUNTRY = 4;
+    /* Data lines per country data in the txt file (counting the '\n'). */
+    private static final int LINES_PER_COUNTRY = 5;
+    private static final int INITIAL_LINE_COUNTER = 0;
+    private static final int DIVISIBLE = 0;
 
     /*
     * Hashmap containing all the country's objects.
@@ -31,19 +39,69 @@ public class World {
     }
 
     // Method to populate the countryMap hashmap with all the countries.
-    private static void populateCountryMap() {
+    private void populateCountryMap() {
         for(char fileName = 'a'; fileName <= 'z'; fileName++) {
             final File countryFactsTxt;
             countryFactsTxt = new File(".\\src\\resources\\" + fileName + ".txt");
 
             try {
-                final Scanner sc;
-                sc = new Scanner(countryFactsTxt);
+                final Scanner fileScanner;
+                fileScanner = new Scanner(countryFactsTxt);
+                int lineCounter;
+                lineCounter = INITIAL_LINE_COUNTER;
 
-                while(sc.hasNextLine()) {
-                    System.out.println(sc.nextLine());
+                while(fileScanner.hasNextLine()) {
+
+                    final Scanner lineScanner;
+                    final String currLine;
+
+                    final String countryName;
+                    final String countryCapital;
+                    final String[] countryFacts;
+
+                    countryName = null;
+                    countryCapital = null;
+                    countryFacts = new String[DATA_LINES_PER_COUNTRY];
+
+                    currLine = fileScanner.nextLine();
+
+                    if(lineCounter % LINES_PER_COUNTRY == DIVISIBLE) {
+                        // Checking first line
+                        lineScanner = new Scanner(currLine);
+                        lineScanner.useDelimiter(":");
+
+                        while(lineScanner.hasNext()) {
+                            // TODO: Be able to get data from each part of the first line
+                            final String word;
+                            word = lineScanner.next();
+
+                        }
+
+                    } if(lineCounter % LINES_PER_COUNTRY == DATA_LINES_PER_COUNTRY) {
+                        // Checks if we are the last line and adds country to HashMap.
+                        final Country currCountry;
+                        currCountry = new Country(countryName, countryCapital, countryFacts);
+                        addCountry(currCountry);
+                    } else {
+                        // Checking facts line
+                        int factIdx;
+
+                        // TODO: Check at which position we are at facts array and append to it
+                    }
+
+                    lineCounter++;
                 }
             } catch (final Exception e) {}
+        }
+    }
+
+    private void addCountry(final Country country) {
+        if(country != null &&
+            country.getName() != null &&
+            country.getCapitalCityName() != null &&
+            country.getFacts() != null) {
+
+            countryMap.put(country.getName(), country);
         }
     }
 
