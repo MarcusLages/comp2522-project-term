@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Class that represents a World full of countries and their
- * information.
+ * Class that represents a World full of countries and Country objects
+ * and their information.
  *
  * @author Marcus Vinicius Santos Lages
  * @version 1.0

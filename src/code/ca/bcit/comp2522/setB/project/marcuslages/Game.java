@@ -9,5 +9,14 @@ package ca.bcit.comp2522.setB.project.marcuslages;
  */
 public abstract class Game {
 
+    /**
+     * Method used to start the overall game.
+     */
+    public abstract void start();
+
+    /**
+     * Method used to start a single match of the game.
+     */
+    public abstract void startMatch();
 
 }
