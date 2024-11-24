@@ -24,7 +24,7 @@ public class World {
     private static final int FIRST_FACT_IDX = 0;
 
     /*
-    * Hashmap containing all the country's objects.
+    * Map containing all the country's objects.
     * Key: country's name
     * Value: country's Country object
     */
@@ -38,7 +38,7 @@ public class World {
         populateCountryMap();
     }
 
-    // Method to populate the countryMap hashmap with all the countries.
+    // Helper method to populate the countryMap a map with all the countries.
     private void populateCountryMap() {
 
         final Path folderPath;
@@ -54,53 +54,52 @@ public class World {
             currentFilepath = folderPath.resolve(filenameTxtExtension);
 
             if(Files.exists(currentFilepath)) {
-                parseCountriesToHashmap(countryMap, currentFilepath);
-                countryMap.toString();
-            } else {
+                parseCountriesToMap(countryMap, currentFilepath);
 
-                final String errorMsg;
-                errorMsg = filenameTxtExtension + " does not exist." + System.lineSeparator();
-
-                System.out.println(errorMsg);
-                throw new RuntimeException(errorMsg);
             }
 
         }
     }
 
-    private static void parseCountriesToHashmap(final Map<String, Country> countryMap,
-                                                final Path currentFilepath) {
-        final List<String> lines;
+    // Helper method to parse countries from a file into a
+    // map (key: country name, value: Country object).
+    private static void parseCountriesToMap(final Map<String, Country> countryMap,
+                                            final Path currentFilepath) {
 
         try {
-            lines = Files.readAllLines(currentFilepath);
 
-            int i = FIRST_LINE;
-            while (i < lines.size()) {
+            final List<String> lines;
+            int currentLine;
+
+            lines = Files.readAllLines(currentFilepath);
+            currentLine = FIRST_LINE;
+
+            while (currentLine < lines.size()) {
 
                 // Skip empty lines between entries
-                if (lines.get(i).trim().isEmpty()) {
-                    i++;
+                if (lines.get(currentLine).trim().isEmpty()) {
+                    currentLine++;
                     continue;
                 }
 
-                // Extract country name and capital
                 final Country country;
                 final String[] nameCapital;
                 final String countryName;
                 final String capitalCityName;
                 final String[] countryFacts;
 
-                nameCapital = lines.get(i).split(":");
+                // Extract country name and capital
+                nameCapital = lines.get(currentLine).split(":");
                 countryName = nameCapital[COUNTRY_NAME_IDX].trim();
                 capitalCityName = nameCapital[COUNTRY_CAPITAL_IDX].trim();
 
                 // Jumps to the next line, which are the country facts lines.
-                i++;
+                currentLine++;
 
-                // Extract the next COUNTRY_FACTS lines as facts and jump skip those COUNTRY_FACTS lines
-                countryFacts = parseCountryFacts(lines, i);
-                i += COUNTRY_FACTS;
+                // Extract the next COUNTRY_FACTS lines as facts and
+                // skips those COUNTRY_FACTS lines
+                countryFacts = parseCountryFacts(lines, currentLine);
+                currentLine += COUNTRY_FACTS;
 
                 country = new Country(countryName, capitalCityName, countryFacts);
 
@@ -121,6 +120,8 @@ public class World {
         currentLine = startLine;
         countryFacts = new String[COUNTRY_FACTS];
 
+        // Goes through the next COUNTRY_FACTS lines and adds them to
+        // the countryFacts array.
         for (int j = FIRST_FACT_IDX; j < COUNTRY_FACTS && currentLine < lines.size(); j++) {
 
             countryFacts[j] = lines.get(currentLine).trim();
@@ -132,10 +133,14 @@ public class World {
         return countryFacts;
     }
 
-    private void addCountry(final Country country) {
+    // Helper function to only add a country to a map (key: country name, value: Country object)
+    // if validated.
+    private static void addCountry(final Map<String, Country> countryMap,
+                                   final Country country) {
+
         if(country != null &&
-            country.getName() != null &&
-            country.getCapitalCityName() != null &&
+            (country.getName() != null || !country.getName().isBlank()) &&
+            (country.getCapitalCityName() != null || !country.getCapitalCityName().isBlank()) &&
             country.getFacts() != null) {
 
             countryMap.put(country.getName(), country);

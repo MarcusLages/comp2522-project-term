@@ -8,4 +8,6 @@ package ca.bcit.comp2522.setB.project.marcuslages;
  * @version 1.0
  */
 public abstract class Game {
+
+
 }
