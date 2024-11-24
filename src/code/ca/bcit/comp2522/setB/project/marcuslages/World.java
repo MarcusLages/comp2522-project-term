@@ -1,7 +1,10 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
 import java.io.File;
-import java.lang.reflect.Array;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -17,6 +20,7 @@ public class World {
 
     /* Data lines per country data in the txt file (counting the '\n'). */
     private static final int DATA_LINES_PER_COUNTRY = 4;
+
     /* Data lines per country data in the txt file (counting the '\n'). */
     private static final int LINES_PER_COUNTRY = 5;
     private static final int INITIAL_LINE_COUNTER = 0;
@@ -34,19 +38,37 @@ public class World {
      */
     public World() {
         countryMap = new HashMap<>();
-
         populateCountryMap();
     }
 
     // Method to populate the countryMap hashmap with all the countries.
     private void populateCountryMap() {
+
         for(char fileName = 'a'; fileName <= 'z'; fileName++) {
-            final File countryFactsTxt;
-            countryFactsTxt = new File(".\\src\\resources\\" + fileName + ".txt");
+
+            final Path currentFilepath;
+            final String filenameTxtExtension;
+
+            // Resolving the filepath with the filename and its txt extension into one Path
+            filenameTxtExtension = fileName + ".txt";
+            currentFilepath = Paths.get("src","resources");
+            currentFilepath.resolve(filenameTxtExtension);
+
+            if(Files.exists(currentFilepath)) {
+                // TODO: list of lines
+
+            } else {
+
+                final String errorMsg;
+                errorMsg = filenameTxtExtension + " does not exist." + System.lineSeparator()
+
+                System.out.println(errorMsg);
+                throw new RuntimeException(errorMsg);
+            }
 
             try {
                 final Scanner fileScanner;
-                fileScanner = new Scanner(countryFactsTxt);
+                fileScanner = new Scanner(countryFactsFile);
                 int lineCounter;
                 lineCounter = INITIAL_LINE_COUNTER;
 
@@ -91,7 +113,9 @@ public class World {
 
                     lineCounter++;
                 }
-            } catch (final Exception e) {}
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
