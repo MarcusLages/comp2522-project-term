@@ -69,19 +69,24 @@ public class WordGame extends Game {
 
     }
 
+    /**
+     * Function that receives user input and checks if the user
+     * wants to stop playing or not.
+     *
+     * @return true if user wants to stop playing
+     */
     private static boolean stopMatch() {
 
         final Scanner sc;
-        String input;
 
         sc = InputScanner.getInstance();
-        input = null;
 
         do {
+            final String input;
 
             System.out.println("Would you like to play again?");
 
-            // TODO: ASDGFASDFA
+            // TODO: TEST SC.HASNEXT()
             if(sc.hasNext()) {
                 input = sc.nextLine();
 
@@ -105,6 +110,10 @@ public class WordGame extends Game {
 
     }
 
+    /**
+     * Function used to ask a Question about a Country to a user and
+     * document the user Score.
+     */
     private void askQuestion() {
         final Country country;
         final Question question;
@@ -127,12 +136,14 @@ public class WordGame extends Game {
 
         } while(questionAttempt <= LAST_ATTEMPT);
 
-        calculateNewScore(question, questionAttempt, score);
+        documentNewScore(question, questionAttempt, score);
     }
 
-    private static void calculateNewScore(final Question question,
-                                          final int questionAttempt,
-                                          final Score score) {
+    // Helper function used to document and assign the new Score from the current match
+    // and display a loss message.
+    private static void documentNewScore(final Question question,
+                                         final int questionAttempt,
+                                         final Score score) {
 
         if(questionAttempt == FIRST_ATTEMPT) {
             score.increaseNumCorrectFirstAttempt();
