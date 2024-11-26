@@ -10,6 +10,10 @@ import java.util.Scanner;
  */
 public class WordGame extends Game {
 
+    private static final int FIRST_QUESTION = 1;
+    private static final int LAST_QUESTION = 10;
+    private static final int FIRST_ATTEMPT = 1;
+    private static final int LAST_ATTEMPT = 2;
     private final World world;
     private final Score score;
 
@@ -45,6 +49,13 @@ public class WordGame extends Game {
      */
     @Override
     public void startMatch() {
+        int questionNumber = FIRST_QUESTION;
+
+        do {
+            System.out.println("Question #" + questionNumber + ":\n");
+            askQuestion();
+            questionNumber--;
+        } while(questionNumber != LAST_QUESTION);
 
         System.out.println(score);
 
@@ -80,6 +91,35 @@ public class WordGame extends Game {
 
         } while (true);
 
+    }
+
+    private void askQuestion() {
+        final Country country;
+        final Question question;
+        int questionAttempt;
+
+        country = World.getRandomCountry();
+        question = getCountryQuestion(country);
+        questionAttempt = FIRST_ATTEMPT;
+
+        do{
+            if(!question.ask()) {
+                questionAttempt++;
+
+            } else {
+                break;
+
+            }
+
+        } while(questionAttempt <= LAST_ATTEMPT);
+
+        if(questionAttempt == FIRST_ATTEMPT) {
+            score.increaseNumCorrectFirstAttempt();
+        } else if(questionAttempt > LAST_ATTEMPT) {
+            score.increaseIncorrectTwoAttempts();
+        } else {
+            score.increaseNumCorrectSecondAttempt();
+        }
     }
 
 }
