@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Class that represents a World full of countries and Country objects
@@ -21,25 +19,41 @@ public class World {
     private static final int COUNTRY_NAME_IDX = 0;
     private static final int COUNTRY_CAPITAL_IDX = 1;
     private static final int COUNTRY_FACTS = 3;
-    private static final int FIRST_FACT_IDX = 0;
 
     /*
     * Map containing all the country's objects.
     * Key: country's name
     * Value: country's Country object
     */
-    private final Map<String, Country> countryMap;
+    private static final Map<String, Country> countryMap;
 
-    /**
-     * Creates a World object and populates it with all the countries.
-     */
-    public World() {
+    // Creates the countryMap HashMap and populates it with all the countries.
+    static {
         countryMap = new HashMap<>();
         populateCountryMap();
     }
 
+    /**
+     * Doesn't allow the creation of a World object.
+     */
+    private World() {
+    }
+
+    public static Country getRandomCountry() {
+
+        final List<String> countryNameList;
+        final Random randGenerator;
+        final int randomCountryNameIdx;
+
+        countryNameList = new ArrayList<>(countryMap.keySet());
+        randGenerator = new Random();
+        randomCountryNameIdx = randGenerator.nextInt(countryNameList.size());
+
+        return countryMap.get(countryNameList.get(randomCountryNameIdx));
+    }
+
     // Helper method to populate the countryMap a map with all the countries.
-    private void populateCountryMap() {
+    private static void populateCountryMap() {
 
         final Path folderPath;
         folderPath = Paths.get("src","resources");
@@ -54,7 +68,7 @@ public class World {
             currentFilepath = folderPath.resolve(filenameTxtExtension);
 
             if(Files.exists(currentFilepath)) {
-                parseCountriesToMap(countryMap, currentFilepath);
+                parseCountriesToMap(currentFilepath);
 
             }
 
@@ -63,8 +77,7 @@ public class World {
 
     // Helper method to parse countries from a file into a
     // map (key: country name, value: Country object).
-    private static void parseCountriesToMap(final Map<String, Country> countryMap,
-                                            final Path currentFilepath) {
+    private static void parseCountriesToMap(final Path currentFilepath) {
 
         try {
 
@@ -98,7 +111,7 @@ public class World {
 
                 // Extract the next COUNTRY_FACTS lines as facts and
                 // skips those COUNTRY_FACTS lines
-                countryFacts = parseCountryFacts(lines, currentLine);
+                countryFacts = Country.parseCountryFacts(lines, currentLine, COUNTRY_FACTS);
                 currentLine += COUNTRY_FACTS;
 
                 country = new Country(countryName, capitalCityName, countryFacts);
@@ -111,32 +124,9 @@ public class World {
         }
     }
 
-    private static String[] parseCountryFacts(final List<String> lines,
-                                              final int startLine) {
-
-        int currentLine;
-        final String[] countryFacts;
-
-        currentLine = startLine;
-        countryFacts = new String[COUNTRY_FACTS];
-
-        // Goes through the next COUNTRY_FACTS lines and adds them to
-        // the countryFacts array.
-        for (int j = FIRST_FACT_IDX; j < COUNTRY_FACTS && currentLine < lines.size(); j++) {
-
-            countryFacts[j] = lines.get(currentLine).trim();
-
-            // Next country facts line
-            currentLine++;
-        }
-
-        return countryFacts;
-    }
-
     // Helper function to only add a country to a map (key: country name, value: Country object)
     // if validated.
-    private static void addCountry(final Map<String, Country> countryMap,
-                                   final Country country) {
+    private static void addCountry(final Country country) {
 
         if(country != null &&
             (country.getName() != null || !country.getName().isBlank()) &&

@@ -1,15 +1,5 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * The Question class represents a question about a Country and its corresponding answer.
  *
@@ -38,46 +28,8 @@ public class Question {
         this.answer = answer;
     }
 
-    /**
-     * Reads questions from a file and returns a list of Question objects.
-     *
-     * @return list of Question objects read from the file
-     * @throws RuntimeException if an I/O error occurs while reading the file
-     */
-    public static List<Question> getQuestions() {
-        final List<Question> questions;
-        final Path questionPath;
+    public static Question getCountryQuestion(final Country country) {
 
-        questions = new ArrayList<>();
-        questionPath = Paths.get(QUESTION_FILE_NAME);
-
-        try {
-            final List<String> lines;
-            final Stream<String> lineStream;
-
-            lines = Files.readAllLines(questionPath);
-            parseQuestionsToList(lines, questions);
-
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return questions;
-    }
-
-    // Parses a List of Strings into a List of Question objects.
-    private static void parseQuestionsToList(final List<String> lines, final List<Question> questions) {
-        getFilteredStream(lines)
-                .map(str -> str.split("\\|"))
-                .map(str -> new Question(str[0].trim(), str[1].trim()))
-                .forEach(questions::add);
-    }
-
-    // Filters the stream for no null or blank inputs from the Stream<String>
-    private static Stream<String> getFilteredStream(final List<String> list) {
-        return list.stream()
-                .filter(Objects::nonNull)
-                .filter(p -> !p.isBlank());
     }
 
     // Validates qa to not be null or blank
@@ -87,10 +39,20 @@ public class Question {
         }
     }
 
+    /**
+     * Returns the question being asked as String.
+     *
+     * @return question being asked
+     */
     public String getQuestion(){
         return question;
     }
 
+    /**
+     * Returns the answer for the question being asked as String.
+     *
+     * @return answer for the question
+     */
     public String getAnswer(){
         return answer;
     }

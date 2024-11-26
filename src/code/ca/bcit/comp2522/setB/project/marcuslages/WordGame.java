@@ -99,7 +99,7 @@ public class WordGame extends Game {
         int questionAttempt;
 
         country = World.getRandomCountry();
-        question = getCountryQuestion(country);
+        question = Question.getCountryQuestion(country);
         questionAttempt = FIRST_ATTEMPT;
 
         do{
