@@ -28,27 +28,56 @@ public class Country {
      * @param name              name of the country
      * @param capitalCityName   country's capital city
      * @param facts             string array of facts about the given country
+     * @throws IllegalArgumentException If any of the arguments is null or if
+     *                                  name or capitalCityName is blank
      */
-    public Country(final String name, final String capitalCityName, final String[] facts) {
-        // TODO: Validate country
+    public Country(final String name,
+                   final String capitalCityName,
+                   final String[] facts) {
+
+        validateCountry(name, capitalCityName, facts);
 
         this.name = name;
         this.capitalCityName = capitalCityName;
         this.facts = facts;
     }
 
+
+    /**
+     * Function that returns the name of the country.
+     *
+     * @return name of the country
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Function that returns the capital city of the country.
+     *
+     * @return capital city of the country
+     */
     public String getCapitalCityName() {
         return capitalCityName;
     }
 
+
+    /**
+     * Function that returns an array of facts about the country.
+     *
+     * @return array of facts about the country
+     */
     public String[] getFacts() {
         return facts;
     }
 
+    /**
+     * Method used to create a random Question about a given country based on
+     * its name, capital or array of facts.
+     *
+     * @param country given Country which the Question will be based on
+     * @return Question about the country
+     */
     public static Question getCountryQuestion(final Country country) {
 
         final int questionType;
@@ -69,6 +98,14 @@ public class Country {
         }
     }
 
+    /**
+     * Function that parses a list of lines (String) into a String Array of facts about a country.
+     *
+     * @param lines         list of String lines
+     * @param startLine     line which the parsing will start
+     * @param factsCount    how many facts(lines) will be scanned/parsed
+     * @return array with facts about the country
+     */
     public static String[] parseCountryFacts(final List<String> lines,
                                               final int startLine,
                                               final int factsCount) {
@@ -92,6 +129,7 @@ public class Country {
         return countryFacts;
     }
 
+    // Helper function to choose a random question type.
     private static int getRandomQuestionType() {
         final Random randomGenerator;
         randomGenerator = new Random();
@@ -99,6 +137,7 @@ public class Country {
         return randomGenerator.nextInt(NUM_COUNTRY_QUESTION_TYPES);
     }
 
+    // Helper function that creates a Question about what is the name of the Country from its capital.
     private static Question countryFromCapitalQuestion(final Country country) {
         final String question;
         question = "Which country has " + country.capitalCityName + " as its capital?";
@@ -106,6 +145,7 @@ public class Country {
         return new Question(question, country.name);
     }
 
+    // Helper function that creates a Question about what is the capital of a given Country.
     private static Question capitalQuestion(final Country country) {
         final String question;
         question = "What is the capital of " + country.name + "?";
@@ -113,6 +153,7 @@ public class Country {
         return new Question(question, country.capitalCityName);
     }
 
+    // Helper function that creates a Question about one of the facts of a country.
     private static Question countryFactsQuestion(final Country country) {
         final String question;
         final int randFactIdx;
@@ -124,6 +165,26 @@ public class Country {
             country.facts[randFactIdx];
 
         return new Question(question, country.capitalCityName);
+    }
+
+    // Helper method to validate the Country constructor arguments to not be null and for
+    // name and capitalCityName to not be blank.
+    private void validateCountry(final String name,
+                                 final String capitalCityName,
+                                 final String[] facts) {
+
+        if(name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Invalid name: " + name);
+        }
+
+        if(capitalCityName == null || capitalCityName.isBlank()) {
+            throw new IllegalArgumentException("Invalid capitalCityName: " + capitalCityName);
+        }
+
+        if(facts == null) {
+            throw new IllegalArgumentException("Facts array cannot be null.");
+        }
+
     }
 
 }
