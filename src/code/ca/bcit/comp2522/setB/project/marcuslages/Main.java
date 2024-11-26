@@ -39,7 +39,7 @@ public class Main {
         } while(input != 'q');
 
         System.out.println("Thank you for playing one of Marcus' studios trademark games!");
-        InputScanner.closeScanner();
+        InputScanner.close();
     }
 
     // TODO: CHANGE ALL THIS STUFF TO USE POLYMORPHISM AND GAME.START()
