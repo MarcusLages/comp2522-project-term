@@ -39,6 +39,7 @@ public class Main {
         } while(input != 'q');
 
         System.out.println("Thank you for playing one of Marcus' studios trademark games!");
+        InputScanner.closeScanner();
     }
 
     // TODO: CHANGE ALL THIS STUFF TO USE POLYMORPHISM AND GAME.START()
@@ -66,10 +67,10 @@ public class Main {
      * @return character representing which game to play or quit action
      */
     private static char getInput() {
-        char input;
+        char input = ' ';
         final Scanner sc;
 
-        sc = new Scanner(System.in);
+        sc = InputScanner.getInstance();
 
         do {
             System.out.print("-----------------------\n" +
@@ -77,23 +78,29 @@ public class Main {
                     "w/W for Word Game\n" +
                     "n/N for Number Game\n" +
                     "m/M for MyGame\n" +
-                    "q/Q to Quit" +
+                    "q/Q to Quit\n" +
                     "Game: ");
 
-            input = sc.next().charAt(FIRST_CHAR_IDX);
-            input = Character.toLowerCase(input);
+            if(sc.hasNext()) {
+                input = sc.next().charAt(FIRST_CHAR_IDX);
+                input = Character.toLowerCase(input);
 
-            switch(input) {
-                case 'w', 'n', 'm', 'q':
-                    break;
-                default:
-                    System.out.println("-----------------------\n" +
-                            "Invalid input.\n" +
-                            "-----------------------");
-                    input = ' ';
-                    break;
+                switch(input) {
+                    case 'w', 'n', 'm', 'q':
+                        break;
+
+                    default:
+                        System.out.println("-----------------------\n" +
+                                "Invalid input.\n" +
+                                "-----------------------\n");
+                        input = ' ';
+                        break;
+                }
             }
+
         } while(input == ' ');
+
+        sc.nextLine();
 
         return input;
     }

@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Country {
 
-    private static final int NUM_QUESTION_TYPES = 3;
+    private static final int NUM_COUNTRY_QUESTION_TYPES = 3;
     private static final int QUESTION_A = 0;
     private static final int QUESTION_B = 1;
     private static final int QUESTION_C = 2;
@@ -55,7 +55,6 @@ public class Country {
         questionType = getRandomQuestionType();
 
         switch(questionType) {
-
             case QUESTION_A:
                 return countryFromCapitalQuestion(country);
 
@@ -97,7 +96,7 @@ public class Country {
         final Random randomGenerator;
         randomGenerator = new Random();
 
-        return randomGenerator.nextInt(NUM_QUESTION_TYPES);
+        return randomGenerator.nextInt(NUM_COUNTRY_QUESTION_TYPES);
     }
 
     private static Question countryFromCapitalQuestion(final Country country) {

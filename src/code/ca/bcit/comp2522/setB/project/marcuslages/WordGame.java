@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -14,14 +15,12 @@ public class WordGame extends Game {
     private static final int LAST_QUESTION = 10;
     private static final int FIRST_ATTEMPT = 1;
     private static final int LAST_ATTEMPT = 2;
-    private final World world;
     private final Score score;
 
     /**
      * Creates a WordGame object from scratch.
      */
     public WordGame() {
-        world = new World();
         score = new Score();
     }
 
@@ -52,41 +51,54 @@ public class WordGame extends Game {
         int questionNumber = FIRST_QUESTION;
 
         do {
-            System.out.println("Question #" + questionNumber + ":\n");
+            System.out.println("\nQuestion #" + questionNumber + ":");
             askQuestion();
-            questionNumber--;
-        } while(questionNumber != LAST_QUESTION);
+            questionNumber++;
 
+        } while(questionNumber <= LAST_QUESTION);
+
+        System.out.println("Your score is: ");
         System.out.println(score);
+
+        try {
+            Score.appendScoreToFile(score, Score.DEFAULT_SCORE_FILEPATH);
+
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     private static boolean stopMatch() {
 
         final Scanner sc;
-        sc = new Scanner(System.in);
+        String input;
+
+        sc = InputScanner.getInstance();
+        input = null;
 
         do {
-            final String input;
 
             System.out.println("Would you like to play again?");
-            input = sc.nextLine();
 
-            // To avoid scanner bug
-            sc.nextLine();
+            // TODO: ASDGFASDFA
+            if(sc.hasNext()) {
+                input = sc.nextLine();
 
-            if(input.equalsIgnoreCase("yes") ||
-                    input.equalsIgnoreCase("y")) {
+                // To avoid scanner error
+//            sc.nextLine();
 
-                sc.close();
-                return true;
+                if(input.equalsIgnoreCase("yes") ||
+                        input.equalsIgnoreCase("y")) {
 
-            } else if(input.equalsIgnoreCase("no") ||
-                    input.equalsIgnoreCase("n")) {
+                    return false;
 
-                sc.close();
-                return false;
+                } else if(input.equalsIgnoreCase("no") ||
+                        input.equalsIgnoreCase("n")) {
 
+                    return true;
+
+                }
             }
 
         } while (true);
@@ -99,24 +111,36 @@ public class WordGame extends Game {
         int questionAttempt;
 
         country = World.getRandomCountry();
-        question = Question.getCountryQuestion(country);
+        question = Country.getCountryQuestion(country);
         questionAttempt = FIRST_ATTEMPT;
 
         do{
             if(!question.ask()) {
+                System.out.println("INCORRECT!");
                 questionAttempt++;
 
             } else {
+                System.out.println("CORRECT!");
                 break;
 
             }
 
         } while(questionAttempt <= LAST_ATTEMPT);
 
+        calculateNewScore(question, questionAttempt, score);
+    }
+
+    private static void calculateNewScore(final Question question,
+                                          final int questionAttempt,
+                                          final Score score) {
+
         if(questionAttempt == FIRST_ATTEMPT) {
             score.increaseNumCorrectFirstAttempt();
+
         } else if(questionAttempt > LAST_ATTEMPT) {
+            System.out.println("The answer was " + question.getAnswer() + System.lineSeparator());
             score.increaseIncorrectTwoAttempts();
+
         } else {
             score.increaseNumCorrectSecondAttempt();
         }

@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * The Question class represents a question about a Country and its corresponding answer.
@@ -26,8 +27,8 @@ public class Question {
         validateQA(question);
         validateQA(answer);
 
-        this.question = question;
-        this.answer = answer;
+        this.question = question.trim();
+        this.answer = answer.trim();
     }
 
     /**
@@ -46,6 +47,27 @@ public class Question {
      */
     public String getAnswer(){
         return answer;
+    }
+
+    public boolean ask() {
+        final Scanner sc;
+        final String userInput;
+
+        sc = InputScanner.getInstance();
+
+        System.out.println(question);
+        userInput = sc.nextLine();
+
+        return isCorrectAnswer(userInput);
+    }
+
+    public boolean isCorrectAnswer(final String answer) {
+
+        if(answer == null || answer.isBlank()) {
+            return false;
+        }
+
+        return this.answer.equalsIgnoreCase(answer.trim());
     }
 
     // Validates qa to not be null or blank

@@ -13,7 +13,7 @@ import java.util.*;
  * @author Marcus Vinicius Santos Lages
  * @version 1.0
  */
-public class World {
+public final class World {
 
     private static final int FIRST_LINE = 0;
     private static final int COUNTRY_NAME_IDX = 0;
@@ -36,8 +36,7 @@ public class World {
     /**
      * Doesn't allow the creation of a World object.
      */
-    private World() {
-    }
+    private World() {}
 
     public static Country getRandomCountry() {
 

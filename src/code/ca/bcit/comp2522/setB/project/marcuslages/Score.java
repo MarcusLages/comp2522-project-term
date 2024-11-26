@@ -30,9 +30,10 @@ public class Score {
     private static final int CORRECT_FIRST_ATTEMPT_LINE = 2;
     private static final int CORRECT_SECOND_ATTEMPT_LINE = 3;
     private static final int INCORRECT_ATTEMPTS_LINE = 4;
-    private static final int TOTAL_SCORE_LINE = 4;
 
     private static final DateTimeFormatter formatter;
+
+    public static final Path DEFAULT_SCORE_FILEPATH;
 
     // How many times will a line will be split in a file so we can
     // get the data from that line in the second part.
@@ -53,6 +54,7 @@ public class Score {
     // since it will be the same for all objects.
     static {
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DEFAULT_SCORE_FILEPATH = Paths.get("test_score.txt");
     }
 
     /**
