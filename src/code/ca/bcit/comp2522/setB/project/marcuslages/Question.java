@@ -1,6 +1,5 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -49,6 +48,12 @@ public class Question {
         return answer;
     }
 
+    /**
+     * Function to ask the user a question, then receive the user
+     * input and returns true if the user answer is right.
+     *
+     * @return true if the user's answer is right
+     */
     public boolean ask() {
         final Scanner sc;
         final String userInput;
@@ -61,6 +66,12 @@ public class Question {
         return isCorrectAnswer(userInput);
     }
 
+    /**
+     * Checks if an answer is correct according to the answer of this Question.
+     *
+     * @param answer String that represents exterior answer to this Question
+     * @return true if answer is right
+     */
     public boolean isCorrectAnswer(final String answer) {
 
         if(answer == null || answer.isBlank()) {
