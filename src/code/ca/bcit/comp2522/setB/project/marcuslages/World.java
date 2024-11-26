@@ -9,6 +9,8 @@ import java.util.*;
 /**
  * Class that represents a World full of countries and Country objects
  * and their information.
+ * This class doesn't allow the creation of objects and should be used
+ * to access Countries and the Country's hashmap.
  *
  * @author Marcus Vinicius Santos Lages
  * @version 1.0
@@ -38,6 +40,12 @@ public final class World {
      */
     private World() {}
 
+    /**
+     * Function that returns a random Country object from the
+     * available Countries.
+     *
+     * @return random Country
+     */
     public static Country getRandomCountry() {
 
         final List<String> countryNameList;
