@@ -123,7 +123,7 @@ public final class World {
 
                 country = new Country(countryName, capitalCityName, countryFacts);
 
-                countryMap.put(countryName, country);
+                addCountryToMap(country);
             }
 
         } catch (final IOException e) {
@@ -133,7 +133,7 @@ public final class World {
 
     // Helper function to only add a country to a map (key: country name, value: Country object)
     // if validated.
-    private static void addCountry(final Country country) {
+    private static void addCountryToMap(final Country country) {
 
         if(country != null &&
             (country.getName() != null || !country.getName().isBlank()) &&

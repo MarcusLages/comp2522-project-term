@@ -57,6 +57,8 @@ public class WordGame extends Game {
 
         } while(questionNumber <= LAST_QUESTION);
 
+        score.increaseNumGamesPlayed();
+
         System.out.println("Your score is: ");
         System.out.println(score);
 
