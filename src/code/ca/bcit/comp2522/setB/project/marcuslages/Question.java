@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
+import java.util.Random;
+
 /**
  * The Question class represents a question about a Country and its corresponding answer.
  *
@@ -28,17 +30,6 @@ public class Question {
         this.answer = answer;
     }
 
-    public static Question getCountryQuestion(final Country country) {
-
-    }
-
-    // Validates qa to not be null or blank
-    private static void validateQA(final String qa) {
-        if(qa == null || qa.isBlank()) {
-            throw new IllegalArgumentException("Invalid question/answer. Input: " + qa);
-        }
-    }
-
     /**
      * Returns the question being asked as String.
      *
@@ -55,6 +46,13 @@ public class Question {
      */
     public String getAnswer(){
         return answer;
+    }
+
+    // Validates qa to not be null or blank
+    private static void validateQA(final String qa) {
+        if(qa == null || qa.isBlank()) {
+            throw new IllegalArgumentException("Invalid question/answer. Input: " + qa);
+        }
     }
 
 }
