@@ -41,6 +41,7 @@ public class Main {
         System.out.println("Thank you for playing one of Marcus' studios trademark games!");
     }
 
+    // TODO: CHANGE ALL THIS STUFF TO USE POLYMORPHISM AND GAME.START()
     /* Runs word game. */
     private static void playWordGame() {
         final WordGame game;
