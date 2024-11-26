@@ -60,6 +60,7 @@ class ScoreTest {
         assertEquals(25, scores.size(), "Twenty-five scores should have been read from the file.");
         for (int i = 0; i < 25; i++) {
             int expectedScore = ((i + 1) * 2) + ((i % 3) + 1);
+            int score = scores.get(i).getScore();
             assertEquals(expectedScore, scores.get(i).getScore(), "Score for entry " + i + " should match the calculated value.");
         }
     }

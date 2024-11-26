@@ -43,7 +43,10 @@ public class Main {
 
     /* Runs word game. */
     private static void playWordGame() {
-        WordGame.start();
+        final WordGame game;
+        game = new WordGame();
+
+        game.start();
     }
 
     /* Runs number game. */

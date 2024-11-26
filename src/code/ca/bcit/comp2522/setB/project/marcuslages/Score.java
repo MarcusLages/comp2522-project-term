@@ -1,9 +1,13 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +22,24 @@ public class Score {
     private static final int MIN_ATTEMPT_VALUE = 0;
     private static final int MIN_GAME_COUNT = 0;
     private static final int FIRST_ATTEMPT_POINTS = 2;
-    private static final int SECOND_ATTEMPT_POINTS = 2;
+    private static final int SECOND_ATTEMPT_POINTS = 1;
+
+    // Constants used to get the line in a block of text that refers to that specific data.
+    private static final int DATE_TIME_LINE = 0;
+    private static final int GAMES_PLAYED_LINE = 1;
+    private static final int CORRECT_FIRST_ATTEMPT_LINE = 2;
+    private static final int CORRECT_SECOND_ATTEMPT_LINE = 3;
+    private static final int INCORRECT_ATTEMPTS_LINE = 4;
+    private static final int TOTAL_SCORE_LINE = 4;
+
     private static final DateTimeFormatter formatter;
+
+    // How many times will a line will be split in a file so we can
+    // get the data from that line in the second part.
+    // Format of line:
+    //      header : data
+    private static final int SPLIT_LINE_LIMIT = 2;
+    private static final int DATA_INDEX_IN_LINE = 1;
 
     private final LocalDateTime dateTimePlayed;
     private final String dateTimePlayedStr;
@@ -74,30 +94,161 @@ public class Score {
                 MIN_ATTEMPT_VALUE, MIN_ATTEMPT_VALUE, MIN_ATTEMPT_VALUE);
     }
 
-    // TODO: APPEND SCORE TO FILE
-//    public static void appendScoreToFile(final Score score,
-//                                         final String filename) throws IOException {
-//
-//
-//
-//    }
-//
-//    public static void appendScoreToFile(final Score score,
-//                                         final Path filepath) throws IOException {
-//
-//
-//    }
-//
-    // TODO: READ SCORE FROM FILE
-//    public static List<Score> readScoresFromFile(final String filename)
-//            throws IOException {
-//
-//    }
-//
-//    public static List<Score> readScoresFromFile(final Path filepath)
-//            throws IOException {
-//
-//    }
+    /**
+     * Appends a score to a file specified by filename.
+     * If the file doesn't exist, it's created first.
+     *
+     * @param score    Score object to be appended.
+     * @param filename name of the file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static void appendScoreToFile(final Score score,
+                                         final String filename) throws IOException {
+
+        final Path filepath;
+        filepath = Paths.get(filename);
+
+        appendScoreToFile(score, filepath);
+
+    }
+
+    /**
+     * Appends a score to a file specified by filename.
+     * If the file doesn't exist, it's created first.
+     *
+     * @param score    Score object to be appended.
+     * @param filepath Path to the specified file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static void appendScoreToFile(final Score score,
+                                         final Path filepath) throws IOException {
+
+        final String scoreString;
+        scoreString = score.toString() + System.lineSeparator();
+        Files.writeString(filepath, scoreString, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+    }
+
+    /**
+     * Reads scores from a file specified by filename.
+     * Returns null if file doesn't exist.
+     *
+     * @param filename name of the file to read from.
+     * @return list of Score objects.
+     *         null if file doesn't exist.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static List<Score> readScoresFromFile(final String filename)
+            throws IOException {
+
+        final Path filepath;
+        filepath = Paths.get(filename);
+
+        return readScoresFromFile(filepath);
+    }
+
+    /**
+     * Reads scores from a file specified by filename.
+     * Returns null if file doesn't exist.
+     *
+     * @param filepath Path to the file to read from.
+     * @return list of Score objects.
+     *         null if file doesn't exist.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static List<Score> readScoresFromFile(final Path filepath)
+            throws IOException {
+
+        final List<Score> scores;
+        scores = new ArrayList<>();
+
+        if(Files.exists(filepath)) {
+
+            final List<String> lines;
+
+            lines = Files.readAllLines(filepath);
+            parseScoresFromLines(lines, scores);
+
+        }
+
+        return scores;
+
+    }
+
+    // Function to parse and transform a list of String lines into a list of Score objects.
+    private static void parseScoresFromLines(final List<String> lines,
+                                             final List<Score> scores) {
+
+        final List<String> block;
+        block = new ArrayList<>();
+
+        for(final String line: lines) {
+
+            if(line.trim().isEmpty()) {
+                if(!block.isEmpty()) {
+
+                    scores.add(parseStringBlock(block));
+                    block.clear();
+                }
+
+            } else {
+                block.add(line);
+            }
+        }
+
+        if(!block.isEmpty()) {
+            scores.add(parseStringBlock(block));
+            block.clear();
+        }
+
+    }
+
+    // Function used parse a block (list of String lines) into a Score object,
+    // getting the right information from each line.
+    private static Score parseStringBlock(final List<String> block) {
+
+        final Score score;
+        final LocalDateTime dateTimePlayed;
+        final int numGamesPlayed;
+        final int numCorrectFirstAttempt;
+        final int numCorrectSecondAttempt;
+        final int numIncorrectTwoAttempts;
+
+
+        dateTimePlayed = parseDateTime(block.get(DATE_TIME_LINE));
+        numGamesPlayed = parseLineIntData(block.get(GAMES_PLAYED_LINE));
+        numCorrectFirstAttempt = parseLineIntData(block.get(CORRECT_FIRST_ATTEMPT_LINE));
+        numCorrectSecondAttempt = parseLineIntData(block.get(CORRECT_SECOND_ATTEMPT_LINE));
+        numIncorrectTwoAttempts = parseLineIntData(block.get(INCORRECT_ATTEMPTS_LINE));
+
+        score = new Score(dateTimePlayed, numGamesPlayed, numCorrectFirstAttempt,
+                numCorrectSecondAttempt, numIncorrectTwoAttempts);
+        return score;
+    }
+
+    // Helper function to parse a String line from a Score file into a LocalDateTime
+    // with the format based on the formatter object: "yyyy-MM-dd HH:mm:ss".
+    private static LocalDateTime parseDateTime(final String dateTimeLine) {
+
+        final LocalDateTime dateTime;
+
+        dateTime = LocalDateTime.parse(
+                dateTimeLine.split(": ", SPLIT_LINE_LIMIT)[DATA_INDEX_IN_LINE].trim(),
+                formatter
+        );
+
+        return dateTime;
+    }
+
+    // Helper function to parse an integer data (int) from a String line from a Score file.
+    private static int parseLineIntData(final String dataLine) {
+        final int data;
+        final String dataStr;
+
+        dataStr = dataLine.split(": ", SPLIT_LINE_LIMIT)[DATA_INDEX_IN_LINE].trim();
+        data = Integer.parseInt(dataStr);
+
+        return data;
+    }
 
     /**
      * Returns the date and time when the game was played as a formatted string.
@@ -199,6 +350,9 @@ public class Score {
      * games played, correct and incorrect attempts, score in points
      * and date and time of when the game was played.
      *
+     * @attention I used System.lineSeparator() for the lines at first,
+     *            but it didn't pass the tests, so I used '\n'
+     *
      * @return Score information
      */
     @Override
@@ -207,25 +361,21 @@ public class Score {
         final StringBuilder sb;
         sb = new StringBuilder();
 
+        // I used System.lineSeparator() for the lines at first, but it
+        // didn't pass the tests, so I used '\n'
         sb.append("Date and Time: ")
                 .append(dateTimePlayedStr)
-                .append(System.lineSeparator())
-                .append("Games Played: ")
+                .append("\nGames Played: ")
                 .append(numGamesPlayed)
-                .append(System.lineSeparator())
-                .append("Correct First Attempts: ")
+                .append("\nCorrect First Attempts: ")
                 .append(numCorrectFirstAttempt)
-                .append(System.lineSeparator())
-                .append("Correct Second Attempts: ")
+                .append("\nCorrect Second Attempts: ")
                 .append(numCorrectSecondAttempt)
-                .append(System.lineSeparator())
-                .append("Incorrect Attempts: ")
+                .append("\nIncorrect Attempts: ")
                 .append(numIncorrectTwoAttempts)
-                .append(System.lineSeparator())
-                .append("Score: ")
+                .append("\nScore: ")
                 .append(getScore())
-                .append(" points")
-                .append(System.lineSeparator());
+                .append(" points\n");
 
         return sb.toString();
     }
