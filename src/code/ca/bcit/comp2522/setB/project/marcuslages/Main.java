@@ -31,7 +31,10 @@ public class Main {
             input = getInput();
             game = getGame(input);
 
-            game.startGame();
+            if(game != null) {
+                game.startGame();
+
+            }
 
         } while(input != QUIT_INPUT);
 
@@ -58,6 +61,9 @@ public class Main {
 
             case MY_GAME_INPUT:
                 return new MyGame();
+
+            case QUIT_INPUT:
+                return null;
 
             default:
                 throw new IllegalArgumentException("Invalid input in getGame method.");
