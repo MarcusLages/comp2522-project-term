@@ -9,7 +9,8 @@ import java.util.Scanner;
  * @author Marcus Vinicius Santos Lages
  * @version 1.0
  */
-public class WordGame extends Game {
+public class WordGame
+        implements Game {
 
     private static final int FIRST_QUESTION = 1;
     private static final int LAST_QUESTION = 10;
@@ -28,7 +29,7 @@ public class WordGame extends Game {
      * Method used to start the WordGame.
      */
     @Override
-    public void start() {
+    public void startGame() {
 
         System.out.println("Welcome to the WordGame." + System.lineSeparator());
 

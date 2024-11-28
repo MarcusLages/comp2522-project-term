@@ -10,7 +10,12 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Main {
+
     private static final int FIRST_CHAR_IDX = 0;
+    private static final char WORD_GAME_INPUT = 'w';
+    private static final char NUMBER_GAME_INPUT = 'n';
+    private static final char MY_GAME_INPUT = 'm';
+    private static final char QUIT_INPUT = 'q';
 
     /**
      * Programs main entry point.
@@ -18,47 +23,46 @@ public class Main {
      * @param args command line arguments (unused)
      */
     public static void main(final String[] args) {
+
         char input;
+        Game game;
 
         do {
             input = getInput();
+            game = getGame(input);
 
-            switch(input) {
-                case 'w':
-                    playWordGame();
-                    break;
-                case 'n':
-                    playNumberGame();
-                    break;
-                case 'm':
-                    playMyGame();
-                    break;
-                default:
-                    System.out.println("You shouldn't be here.");
-            }
-        } while(input != 'q');
+            game.startGame();
+
+        } while(input != QUIT_INPUT);
 
         System.out.println("Thank you for playing one of Marcus' studios trademark games!");
+
         InputScanner.close();
     }
 
-    // TODO: CHANGE ALL THIS STUFF TO USE POLYMORPHISM AND GAME.START()
-    /* Runs word game. */
-    private static void playWordGame() {
-        final WordGame game;
-        game = new WordGame();
+    /**
+     * Helper function used to return the Game that will be played respective to the input given.
+     *
+     * @param input input used to get proper Game object
+     * @return Game respective to the input
+     */
+    private static Game getGame(final char input) {
 
-        game.start();
-    }
+        switch(input) {
 
-    /* Runs number game. */
-    private static void playNumberGame() {
-        System.out.println("Playing number game");
-    }
+            case WORD_GAME_INPUT:
+                return new WordGame();
 
-    /* Runs my game. */
-    private static void playMyGame() {
-        System.out.println("Playing my game");
+            case NUMBER_GAME_INPUT:
+                return new NumberGame();
+
+            case MY_GAME_INPUT:
+                return new MyGame();
+
+            default:
+                throw new IllegalArgumentException("Invalid input in getGame method.");
+        }
+
     }
 
     /**
@@ -75,10 +79,10 @@ public class Main {
         do {
             System.out.print("-----------------------\n" +
                     "Please choose a game to play:\n" +
-                    "w/W for Word Game\n" +
-                    "n/N for Number Game\n" +
-                    "m/M for MyGame\n" +
-                    "q/Q to Quit\n" +
+                    WORD_GAME_INPUT + "/" + Character.toUpperCase(WORD_GAME_INPUT) + " for Word Game\n" +
+                    NUMBER_GAME_INPUT + "/" + Character.toUpperCase(NUMBER_GAME_INPUT) + " for Number Game\n" +
+                    MY_GAME_INPUT + "/" + Character.toUpperCase(MY_GAME_INPUT) + " for MyGame\n" +
+                    QUIT_INPUT + "/" + Character.toUpperCase(QUIT_INPUT) + " to Quit\n" +
                     "Game: ");
 
             if(sc.hasNext()) {
@@ -86,7 +90,7 @@ public class Main {
                 input = Character.toLowerCase(input);
 
                 switch(input) {
-                    case 'w', 'n', 'm', 'q':
+                    case WORD_GAME_INPUT, NUMBER_GAME_INPUT, MY_GAME_INPUT, QUIT_INPUT:
                         break;
 
                     default:
