@@ -392,35 +392,41 @@ public class Score {
                                       final int numIncorrectTwoAttempts) {
 
         if(dateTimePlayed == null) {
-            throw new IllegalArgumentException("Invalid LocalDateTime. Date for Score cannot be null.");
+            throw new IllegalArgumentException("Invalid LocalDateTime. " +
+                    "Date for Score cannot be null.");
         }
 
         if(dateTimePlayed.isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Invalid LocalDateTime. Date for Score cannot be in the future. " +
+            throw new IllegalArgumentException("Invalid LocalDateTime. " +
+                    "Date for Score cannot be in the future. " +
                     "LocalDateTime: " + dateTimePlayed.format(formatter));
 
         }
 
         if(numGamesPlayed < MIN_GAME_COUNT) {
-            throw new IllegalArgumentException("Invalid numGamesPlayed, must be greater than " + MIN_GAME_COUNT +
+            throw new IllegalArgumentException("Invalid numGamesPlayed. " +
+                    "Must be greater than " + MIN_GAME_COUNT +
                     ". numGamesPlayed: " + numGamesPlayed);
 
         }
 
         if(numCorrectFirstAttempt < MIN_ATTEMPT_VALUE) {
-            throw new IllegalArgumentException("Invalid numCorrectFirstAttempt, must be greater than " + MIN_ATTEMPT_VALUE +
+            throw new IllegalArgumentException("Invalid numCorrectFirstAttempt. " +
+                    "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numCorrectFirstAttempt: " + numGamesPlayed);
 
         }
 
         if(numCorrectSecondAttempt < MIN_ATTEMPT_VALUE) {
-            throw new IllegalArgumentException("Invalid numCorrectSecondAttempt, must be greater than " + MIN_ATTEMPT_VALUE +
+            throw new IllegalArgumentException("Invalid numCorrectSecondAttempt. " +
+                    "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numCorrectSecondAttempt: " + numGamesPlayed);
 
         }
 
         if(numIncorrectTwoAttempts < MIN_ATTEMPT_VALUE) {
-            throw new IllegalArgumentException("Invalid numIncorrectTwoAttempts, must be greater than " + MIN_ATTEMPT_VALUE +
+            throw new IllegalArgumentException("Invalid numIncorrectTwoAttempts. " +
+                    "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numIncorrectTwoAttempts: " + numGamesPlayed);
 
         }
