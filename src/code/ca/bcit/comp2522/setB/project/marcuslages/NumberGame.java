@@ -13,7 +13,7 @@ import java.util.Optional;
 
 
 public class NumberGame extends Application
-        implements Game, Resetable {
+        implements Game, Resettable {
 
     private static final int BUTTON_GRID_Y = 5;
     private static final int BUTTON_GRID_X = 5;
