@@ -5,6 +5,10 @@ import javafx.scene.layout.GridPane;
 
 public class ButtonGrid extends NumberGrid {
 
+    // Used to access the last element of array.
+    // Use array.length - ARRAY_OFFSET
+    private static final int ARRAY_OFFSET = 1;
+
     private GridPane gridPane;
     private Button[][] buttonGrid;
     private GridListener gridListener;
@@ -27,21 +31,20 @@ public class ButtonGrid extends NumberGrid {
     public boolean placeValue(final int x,
                               final int y) {
 
-//        if((x < FIRST_NUM || x > numberGrid.length) ||
-//                (y < FIRST_NUM || y > numberGrid[FIRST_NUM].length)) {
-//
-//            return false;
-//
-//        }
-//
-//        if(numberGrid[x][y] != EMPTY && isInValidInterval(currentValue, x, y)) {
-//
-//            numberGrid[x][y] = currentValue;
-//            return true;
-//        }
-//
-//        return false;
-        return true;
+        if((x < FIRST_NUM || x > numberGrid.length) ||
+                (y < FIRST_NUM || y > numberGrid[FIRST_NUM].length)) {
+
+            return false;
+
+        }
+
+        if(numberGrid[x][y] == EMPTY && isInValidInterval(x, y)) {
+
+            numberGrid[x][y] = currentValue;
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -58,20 +61,18 @@ public class ButtonGrid extends NumberGrid {
         return false;
     }
 
-    public boolean isInValidInterval(final int value,
-                                     final int x,
+    public boolean isInValidInterval(final int x,
                                      final int y) {
 
-//        final int floor;
-//        final int ceil;
-//        final int linearIdx;
-//
-//        floor = getFloor(value);
-//        ceil = getCeil(value);
-//        linearIdx = x * numberGrid[x].length + y;
-//
-//        return floor < linearIdx && linearIdx < ceil;
-        return true;
+        final int floor;
+        final int ceil;
+        final int linearIdx;
+
+        floor = getFloor(currentValue);
+        ceil = getCeil(currentValue);
+        linearIdx = x * numberGrid[x].length + y;
+
+        return floor <= linearIdx && linearIdx <= ceil;
     }
 
     private void initializeButtonGrid() {
@@ -123,11 +124,11 @@ public class ButtonGrid extends NumberGrid {
         final int heightY;
         int floor;
 
-        widthX = numberGrid[FIRST_NUM].length ;
-        heightY = numberGrid.length ;
-        floor = widthX * heightY;
+        widthX = numberGrid[FIRST_NUM].length;
+        heightY = numberGrid.length;
+        floor = FIRST_NUM;
 
-        while(floor > FIRST_NUM) {
+        while(floor < (widthX * heightY - ARRAY_OFFSET)) {
 
             final int floorX;
             final int floorY;
@@ -135,17 +136,119 @@ public class ButtonGrid extends NumberGrid {
             floorX = floor / widthX;
             floorY = floor % widthX;
 
-//            if()
+            if(numberGrid[floorX][floorY] == EMPTY &&
+                largerNumAfter(floor)) {
 
-            floor--;
+                break;
+            }
+
+            floor++;
         }
 
-        return 2;
+        return floor;
     }
 
     // TODO
     private int getCeil(final int value) {
-        return 2;
+
+        final int widthX;
+        final int heightY;
+        int ceil;
+
+        widthX = numberGrid[FIRST_NUM].length ;
+        heightY = numberGrid.length ;
+        ceil = widthX * heightY - ARRAY_OFFSET;
+
+        while(ceil >= FIRST_NUM) {
+
+            final int ceilX;
+            final int ceilY;
+
+            ceilX = ceil / widthX;
+            ceilY = ceil % widthX;
+
+            if(numberGrid[ceilX][ceilY] == EMPTY &&
+                    smallerNumBefore(ceil)) {
+
+                break;
+            }
+
+            ceil--;
+        }
+
+        return ceil;
     }
 
+
+    // Returns true if goes through the whole array and doesn't find anything
+    private boolean largerNumAfter(final int linearFloor) {
+        // Variable that will check the value after floor to make
+        // sure it's possible to place the value there
+        final int widthX;
+        final int heightY;
+
+        int floorNext;
+
+        floorNext = linearFloor;
+        widthX = numberGrid[FIRST_NUM].length ;
+        heightY = numberGrid.length ;
+
+        while(floorNext < (widthX * heightY - ARRAY_OFFSET)) {
+
+            final int floorNextX;
+            final int floorNextY;
+
+            floorNextX = floorNext / widthX;
+            floorNextY = floorNext % widthX;
+
+            if(numberGrid[floorNextX][floorNextY] != EMPTY) {
+                if(numberGrid[floorNextX][floorNextY] < currentValue) {
+
+                    return false;
+                } else {
+
+                    return true;
+                }
+            }
+
+            floorNext++;
+        }
+
+        return true;
+    }
+
+    // Returns true if goes through the whole array and doesn't find anything
+    private boolean smallerNumBefore(final int linearCeil) {
+
+        // Variable that will check the value before the ceil to make
+        // sure it's possible to place the value there
+        final int widthX;
+        int ceilBefore;
+
+        ceilBefore = linearCeil;
+        widthX = numberGrid[FIRST_NUM].length;
+
+        while(ceilBefore >= FIRST_NUM) {
+
+            final int ceilBeforeX;
+            final int ceilBeforeY;
+
+            ceilBeforeX = ceilBefore / widthX;
+            ceilBeforeY = ceilBefore % widthX;
+
+            if(numberGrid[ceilBeforeX][ceilBeforeY] != EMPTY) {
+                if(numberGrid[ceilBeforeX][ceilBeforeY] > currentValue) {
+
+                    return false;
+                } else {
+
+                    return true;
+                }
+            }
+
+            ceilBefore--;
+        }
+
+        return true;
+    }
 }

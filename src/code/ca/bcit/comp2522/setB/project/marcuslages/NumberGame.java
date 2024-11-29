@@ -44,6 +44,8 @@ public class NumberGame extends Application
         final Scene scene;
 
         grid = new ButtonGrid(BUTTON_GRID_X, BUTTON_GRID_Y, this::newCurrentNumber);
+        grid.setCurrentValue(currentNumber);
+
         scene = getScene();
 
         stage.setTitle("Number game");
