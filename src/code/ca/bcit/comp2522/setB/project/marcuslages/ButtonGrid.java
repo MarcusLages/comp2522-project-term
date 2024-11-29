@@ -105,6 +105,17 @@ public class ButtonGrid extends NumberGrid {
         }
     }
 
+    @Override
+    public void reset() {
+        super.reset();
+
+        if(buttonGrid != null && gridPane != null) {
+            gridPane.getChildren().clear();
+            initializeButtonGrid();
+
+        }
+    }
+
     public void setCurrentValue(final int value) {
 
         if(value >= MIN_VAL && value <= MAX_VAL) {
@@ -116,7 +127,6 @@ public class ButtonGrid extends NumberGrid {
         return gridPane;
     }
 
-    // TODO
     private int getFloor(final int value) {
 
         final int widthX;

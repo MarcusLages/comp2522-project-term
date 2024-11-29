@@ -13,9 +13,8 @@ import java.util.Optional;
 
 
 public class NumberGame extends Application
-        implements Game {
+        implements Game, Resetable {
 
-    private static final int FIRST_BUTTON_IDX = 0;
     private static final int BUTTON_GRID_Y = 5;
     private static final int BUTTON_GRID_X = 5;
 
@@ -64,6 +63,7 @@ public class NumberGame extends Application
         header = new Label("Number: " + currentNumber);
         root = new VBox(header, grid.getGridPane());
 
+        // TODO: MAGIC NUMBER
         return new Scene(root, 300,200);
     }
 
@@ -88,7 +88,7 @@ public class NumberGame extends Application
         result = popup.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            // TODO: Reset everything
+            reset();
 
         } else {
             Platform.exit();
@@ -107,6 +107,12 @@ public class NumberGame extends Application
         popup.setContentText("Click OK to restart or Cancel to exit.");
 
         return popup;
+    }
+
+    @Override
+    public void reset() {
+        grid.reset();
+        newCurrentNumber();
     }
 
 }

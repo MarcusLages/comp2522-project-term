@@ -3,7 +3,8 @@ package ca.bcit.comp2522.setB.project.marcuslages;
 import java.util.Arrays;
 import java.util.Random;
 
-public abstract class NumberGrid {
+public abstract class NumberGrid
+        implements Resetable{
 
     protected static final int EMPTY = 0;
     protected static final int FIRST_NUM = 0;
@@ -17,7 +18,8 @@ public abstract class NumberGrid {
         reset();
     }
 
-    private void reset() {
+    @Override
+    public void reset() {
 
         for(int i = FIRST_NUM; i < numberGrid.length; i++) {
             Arrays.fill(numberGrid[i], EMPTY);
