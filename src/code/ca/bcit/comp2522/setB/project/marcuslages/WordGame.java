@@ -47,7 +47,6 @@ public class WordGame
     /**
      * Starts a single match of the WordGame.
      */
-    @Override
     public void startMatch() {
         int questionNumber = FIRST_QUESTION;
 

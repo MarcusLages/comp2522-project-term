@@ -14,9 +14,4 @@ public interface Game {
      */
     public abstract void startGame();
 
-    /**
-     * Method used to start a single match of the game.
-     */
-    public abstract void startMatch();
-
 }

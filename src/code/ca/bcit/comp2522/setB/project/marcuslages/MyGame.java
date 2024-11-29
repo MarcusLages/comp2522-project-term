@@ -7,9 +7,4 @@ public class MyGame
     public void startGame() {
 
     }
-
-    @Override
-    public void startMatch() {
-
-    }
 }
