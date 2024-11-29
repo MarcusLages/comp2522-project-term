@@ -1,10 +1,15 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 
 public class NumberGame extends Application
@@ -17,7 +22,6 @@ public class NumberGame extends Application
     // Command line arguments used when setting up javafx
     private final String[] args;
     private ButtonGrid grid;
-    private VBox root;
     private Label header;
     private int currentNumber;
 
@@ -63,21 +67,6 @@ public class NumberGame extends Application
         return new Scene(root, 300,200);
     }
 
-    private void handleClick(final int value,
-                             final int i,
-                             final int j) {
-
-//        if(grid.checkPlacement(value, i, j)) {
-//
-//            buttonGrid[i][j].setText("" + value);
-//            buttonGrid[i][j].setDisable(true);
-//            getCurrentNumber();
-//        }
-//
-//        buttonGrid[i][j].setText("" + value);
-
-    }
-
     private void newCurrentNumber() {
 
         currentNumber = NumberGrid.getRandomNumber();
@@ -92,7 +81,32 @@ public class NumberGame extends Application
 
     // TODO
     private void endGame() {
+        final Alert popup;  // Set popup type
+        final Optional<ButtonType> result;
 
+        popup = getConfirmationPopUp();
+        result = popup.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            // TODO: Reset everything
+
+        } else {
+            Platform.exit();
+
+        }
+
+    }
+
+    private static Alert getConfirmationPopUp() {
+
+        final Alert popup;
+        popup = new Alert(Alert.AlertType.CONFIRMATION);
+
+        popup.setTitle("Try Again?");
+        popup.setHeaderText("Would you like to play again?");
+        popup.setContentText("Click OK to restart or Cancel to exit.");
+
+        return popup;
     }
 
 }

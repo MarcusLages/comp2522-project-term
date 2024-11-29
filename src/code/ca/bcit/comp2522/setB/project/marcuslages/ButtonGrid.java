@@ -51,14 +51,13 @@ public class ButtonGrid extends NumberGrid {
     // TODO
     @Override
     public boolean checkLoss(final int value) {
-//        final int floor;
-//        final int ceil;
-//
-//        floor = getFloor(value);
-//        ceil = getCeil(value);
-//
-//        return floor > ceil;
-        return false;
+        final int floor;
+        final int ceil;
+
+        floor = getFloor(value);
+        ceil = getCeil(value);
+
+        return floor > ceil;
     }
 
     public boolean isInValidInterval(final int x,
