@@ -9,9 +9,9 @@ public class ButtonGrid extends NumberGrid {
     // Use array.length - ARRAY_OFFSET
     private static final int ARRAY_OFFSET = 1;
 
-    private GridPane gridPane;
-    private Button[][] buttonGrid;
-    private GridListener gridListener;
+    private final GridPane gridPane;
+    private final Button[][] buttonGrid;
+    private final GridListener gridListener;
     private int currentValue;
 
     public ButtonGrid(final int gridSizeX,
@@ -28,7 +28,7 @@ public class ButtonGrid extends NumberGrid {
     }
 
     @Override
-    public boolean placeValue(final int x,
+    public boolean placeValue(int value, final int x,
                               final int y) {
 
         if((x < FIRST_NUM || x > numberGrid.length) ||
@@ -50,7 +50,7 @@ public class ButtonGrid extends NumberGrid {
 
     // TODO
     @Override
-    public boolean checkLoss(final int value) {
+    public boolean isGameLost(final int value) {
         final int floor;
         final int ceil;
 
@@ -89,7 +89,7 @@ public class ButtonGrid extends NumberGrid {
 
                 button.setOnAction(e -> {
 
-                    if(placeValue(row, col)) {
+                    if(placeValue(currentValue, row, col)) {
 
                         button.setText("" + currentValue);
 
@@ -191,6 +191,7 @@ public class ButtonGrid extends NumberGrid {
 
     // Returns true if goes through the whole array and doesn't find anything
     private boolean largerNumAfter(final int linearFloor) {
+
         // Variable that will check the value after floor to make
         // sure it's possible to place the value there
         final int widthX;

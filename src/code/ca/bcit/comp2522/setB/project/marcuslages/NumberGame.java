@@ -73,7 +73,7 @@ public class NumberGame extends Application
         grid.setCurrentValue(currentNumber);
         header.setText("Number: " + currentNumber);
 
-        if(grid.checkLoss(currentNumber)) {
+        if(grid.isGameLost(currentNumber)) {
             endGame();
 
         }
