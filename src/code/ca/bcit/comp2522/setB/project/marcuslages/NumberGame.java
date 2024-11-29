@@ -11,7 +11,8 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
-
+// TODO: DOCUMENT IT
+// TODO: CHECK FOR PRIVATE, FINALS AND ETC.
 public class NumberGame extends Application
         implements Game, Resettable {
 
