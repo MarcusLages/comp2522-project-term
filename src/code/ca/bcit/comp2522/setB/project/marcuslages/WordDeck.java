@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public class WordDeck {
@@ -19,11 +18,15 @@ public class WordDeck {
     public WordDeck() {
 
         words = new ArrayList<>();
-        refillDeck(words);
-        Collections.shuffle(words);
+        refillDeck();
     }
 
-    private static void refillDeck(final List<Word> words) {
+    public void refillDeck() {
+
+        if(!words.isEmpty()) {
+            words.clear();
+
+        }
 
         final Path wordsFilepath;
         wordsFilepath = getWordsFilepath();
@@ -44,6 +47,9 @@ public class WordDeck {
                         e.getMessage());
             }
         }
+
+        Collections.shuffle(words);
+
     }
 
     private static Path getWordsFilepath() {
