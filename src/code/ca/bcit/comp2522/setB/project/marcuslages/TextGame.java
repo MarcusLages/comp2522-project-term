@@ -21,7 +21,7 @@ public interface TextGame extends Game {
         do {
             final String input;
 
-            System.out.println("Would you like to play again?");
+            System.out.println("Would you like to play again? (Y)es/(N)o");
 
             // TODO: TEST SC.HASNEXT()
             if(sc.hasNext()) {

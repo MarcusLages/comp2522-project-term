@@ -55,9 +55,9 @@ public final class GameFactory {
      */
     public static boolean validGameChar(final char gameChar) {
 
-        return gameChar != WORD_GAME_CHAR &&
-                gameChar != NUMBER_GAME_CHAR &&
-                gameChar != MY_GAME_CHAR &&
-                gameChar != QUIT_CHAR;
+        return gameChar == WORD_GAME_CHAR ||
+                gameChar == NUMBER_GAME_CHAR ||
+                gameChar == MY_GAME_CHAR ||
+                gameChar == QUIT_CHAR;
     }
 }

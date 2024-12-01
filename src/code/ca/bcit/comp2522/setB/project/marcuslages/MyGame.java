@@ -27,8 +27,8 @@ public class MyGame
         System.out.println("Welcome to Word Domino's.");
 
         do {
-           startMatch();
-
+//           startMatch();
+//
         } while(!TextGame.stopMatch());
 
     }
@@ -44,14 +44,14 @@ public class MyGame
 
     public void startMatch() {
 
-        do {
+//        do {
             // Display both decks and table
             // Player chooses which word to play
             // Checks if card exists, if so passes it down to the table
             // If table accepts it, draws card from user and shows his points
             // If not, makes the user write it again
 
-        } while(!noMoves());
+//        } while(!noMoves());
 
         if(userHand.isEmpty()) {
             System.out.println("YOU WIN!");
