@@ -27,9 +27,6 @@ public interface TextGame extends Game {
             if(sc.hasNext()) {
                 input = sc.nextLine();
 
-                // To avoid scanner error
-//            sc.nextLine();
-
                 if(input.equalsIgnoreCase("yes") ||
                         input.equalsIgnoreCase("y")) {
 
