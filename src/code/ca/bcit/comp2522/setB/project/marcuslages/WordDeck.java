@@ -4,27 +4,38 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class WordDeck {
+public class WordDeck extends Deck {
 
     private static final String wordsFilename = "my-game-words";
 
-    final List<Word> words;
-
     public WordDeck() {
 
-        words = new ArrayList<>();
         refillDeck();
+    }
+
+    public void drawTo(final Deck deck,
+                     final int drawSize) {
+
+        if(deck == null) {
+            throw new IllegalArgumentException("Invalid deck. Deck is null.");
+        }
+
+        for(int i = FIRST_WORD; i < drawSize; i++) {
+
+            if(!super.isEmpty()) {
+                deck.add(super.draw());
+
+            }
+        }
     }
 
     public void refillDeck() {
 
-        if(!words.isEmpty()) {
-            words.clear();
+        if(!super.isEmpty()) {
+            super.clear();
 
         }
 
@@ -39,7 +50,7 @@ public class WordDeck {
                 wordList = Files.readAllLines(wordsFilepath);
                 getFilteredStream(wordList)
                         .map(str -> new Word(str.trim()))
-                        .forEach(words::add);
+                        .forEach(super::add);
 
             } catch (final IOException e) {
 
@@ -48,7 +59,7 @@ public class WordDeck {
             }
         }
 
-        Collections.shuffle(words);
+        super.shuffle();
 
     }
 
