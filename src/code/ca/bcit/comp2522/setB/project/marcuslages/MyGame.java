@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
+import java.util.Scanner;
+
 public class MyGame
         implements TextGame, Resettable {
 
@@ -44,7 +46,8 @@ public class MyGame
 
 //        do {
             renderGame();
-            // Player chooses which word to play
+            userRound();
+            botRound();
             // Checks if card exists, if so passes it down to the table
             // If table accepts it, draws card from user and shows his points
             // If not, makes the user write it again
@@ -69,7 +72,7 @@ public class MyGame
         sb.append("-----------------------")
                 .append(System.lineSeparator())
                 .append("Board: ")
-                .append(deck)
+                .append(board)
                 .append(System.lineSeparator())
                 .append("House: ")
                 .append(botHand)
@@ -79,6 +82,46 @@ public class MyGame
                 .append(System.lineSeparator());
 
         System.out.println(sb);
+    }
+
+    private void userRound() {
+
+        do {
+            final Word userWord;
+            userWord = getWordInput();
+
+            if(userHand.contains(userWord) &&
+                    board.playWord(userWord)) {
+
+                userHand.draw(userWord);
+
+                break;
+
+            } else {
+                System.out.println("Please enter a valid word.");
+
+            }
+
+        } while(true);
+
+    }
+
+    private void botRound() {}
+
+    private static Word getWordInput() {
+        final Scanner sc;
+        final String userInput;
+        final Word userWord;
+
+        sc = InputScanner.getInstance();
+
+        System.out.println("Card to play.");
+        userInput = sc.nextLine();
+
+        userWord = new Word(userInput);
+
+        return userWord;
+
     }
 
 }

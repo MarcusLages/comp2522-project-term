@@ -58,6 +58,19 @@ public abstract class WordDeck {
         return draw(searchedWordIdx);
     }
 
+    public Word draw(final Word word) {
+
+        final int searchedWordIdx;
+        searchedWordIdx = deck.indexOf(word);
+
+        if(searchedWordIdx == WORD_NOT_FOUND) {
+            return null;
+
+        }
+
+        return draw(searchedWordIdx);
+    }
+
     public Word draw() {
 
         return deck.removeLast();
