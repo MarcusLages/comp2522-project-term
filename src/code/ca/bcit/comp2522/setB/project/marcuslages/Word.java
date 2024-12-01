@@ -8,6 +8,8 @@ public class Word {
     private final static int SECOND_REAR_OFFSET = 2;
     private final static int HEAD_INDEX = 0;
     private final static int SECOND_HEAD_INDEX = 1;
+    private final static int ONE_LETTER_WORD = 1;
+    private final static int TWO_LETTER_WORD = 2;
 
     private final String word;
     private final char head;
@@ -27,9 +29,17 @@ public class Word {
         final StringBuilder sb;
         sb = new StringBuilder();
 
-        sb.append(Character.toUpperCase(head))
-                .append(word, SECOND_HEAD_INDEX, word.length() - SECOND_REAR_OFFSET)
-                .append(Character.toUpperCase(rear));
+        sb.append(Character.toUpperCase(head));
+
+        if(word.length() > TWO_LETTER_WORD) {
+            sb.append(word, SECOND_HEAD_INDEX, word.length() - REAR_OFFSET);
+
+        }
+
+        if(word.length() > ONE_LETTER_WORD) {
+            sb.append(Character.toUpperCase(rear));
+
+        }
 
         return sb.toString();
     }
