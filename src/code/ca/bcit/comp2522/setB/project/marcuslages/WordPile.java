@@ -7,16 +7,18 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class WordPile extends WordDeck {
+public class WordPile extends WordDeck
+        implements Resettable {
 
     private static final String wordsFilename = "my-game-words";
 
     public WordPile() {
 
-        refillDeck();
+        reset();
     }
 
-    public void refillDeck() {
+    @Override
+    public void reset() {
 
         if(!super.isEmpty()) {
             super.clear();

@@ -30,4 +30,11 @@ public class WordHand extends WordDeck {
 
     }
 
+    public void reset(final WordDeck drawingDeck,
+                      final int drawSize) {
+
+        super.clear();
+        drawFrom(drawingDeck, drawSize);
+    }
+
 }

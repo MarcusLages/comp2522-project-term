@@ -23,7 +23,7 @@ public class Word {
     public Word(final String word) {
         validateWord(word);
 
-        this.word = word;
+        this.word = word.trim().toLowerCase();
         head = Character.toLowerCase(word.charAt(HEAD_INDEX));
         rear = Character.toLowerCase(word.charAt(word.length() - REAR_OFFSET));
     }
@@ -38,7 +38,7 @@ public class Word {
             return HEAD_POSITION;
         }
 
-        return NO_POSITION  ;
+        return NO_POSITION;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Word {
         final Word comparedWord;
         comparedWord = (Word) obj;
 
-        return this.word.equals(comparedWord.word);
+        return this.word.equalsIgnoreCase(comparedWord.word);
     }
 
     @Override

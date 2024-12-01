@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MyGame
         implements TextGame, Resettable {
 
-    private static final int HAND_SIZE = 7;
+    private static final int HAND_SIZE = 10;
 
     private final WordPile deck;
     private final WordBoard board;
@@ -19,6 +19,14 @@ public class MyGame
         userHand = new WordHand(deck, HAND_SIZE);
         botHand = new WordHand(deck, HAND_SIZE);
 
+        while(!board.playableDeck(userHand)) {
+            userHand.reset(deck, HAND_SIZE);
+        }
+
+        while(!board.playableDeck(botHand)) {
+            botHand.reset(deck, HAND_SIZE);
+        }
+
     }
 
     @Override
@@ -28,6 +36,7 @@ public class MyGame
 
         do {
            startMatch();
+           reset();
 
         } while(!TextGame.stopMatch());
 
@@ -36,15 +45,19 @@ public class MyGame
     @Override
     public void reset() {
 
-        userHand.clear();
-        botHand.clear();
-        deck.refillDeck();
-        startGame();
+        deck.reset();
+        board.reset(deck.draw());
+        botHand.reset(deck, HAND_SIZE);
+
+        do {
+            userHand.reset(deck, HAND_SIZE);
+
+        } while (!board.playableDeck(userHand));
     }
 
     public void startMatch() {
 
-//        do {
+        do {
             renderGame();
             userRound();
             botRound();
@@ -52,10 +65,13 @@ public class MyGame
             // If table accepts it, draws card from user and shows his points
             // If not, makes the user write it again
 
-//        } while(!noMoves());
+        } while(board.playableDeck(userHand));
 
         if(userHand.isEmpty()) {
             System.out.println("YOU WIN!");
+
+        } else {
+            System.out.println("YOU LOST!");
 
         }
 
@@ -106,7 +122,9 @@ public class MyGame
 
     }
 
-    private void botRound() {}
+    private void botRound() {
+
+    }
 
     private static Word getWordInput() {
         final Scanner sc;
@@ -115,7 +133,7 @@ public class MyGame
 
         sc = InputScanner.getInstance();
 
-        System.out.println("Card to play.");
+        System.out.print("Card to play: ");
         userInput = sc.nextLine();
 
         userWord = new Word(userInput);

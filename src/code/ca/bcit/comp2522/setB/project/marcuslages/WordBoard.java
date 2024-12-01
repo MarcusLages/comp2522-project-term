@@ -8,19 +8,15 @@ public class WordBoard extends WordDeck {
     public WordBoard(final Word initialWord) {
         super();
 
-        super.add(initialWord);
-        headWord = initialWord;
-        rearWord = initialWord;
+        reset(initialWord);
     }
 
     public boolean playWord(final Word word) {
 
-        if(super.contains(word)) {
-            return false;
+        final int wordPosition;
+        wordPosition = canPlayWord(word);
 
-        }
-
-        if(headWord.positionWord(word) == Word.HEAD_POSITION) {
+        if(wordPosition == Word.HEAD_POSITION) {
 
             addHead(word);
             headWord = word;
@@ -28,7 +24,7 @@ public class WordBoard extends WordDeck {
 
         }
 
-        if(rearWord.positionWord(word) == Word.REAR_POSITION) {
+        if(wordPosition == Word.REAR_POSITION) {
 
             addRear(word);
             rearWord = word;
@@ -36,6 +32,45 @@ public class WordBoard extends WordDeck {
         }
 
         return false;
+    }
+
+    public void reset(final Word initialWord) {
+
+        super.clear();
+        super.add(initialWord);
+        headWord = initialWord;
+        rearWord = initialWord;
+    }
+
+    private int canPlayWord(final Word word) {
+
+        if(super.contains(word)) {
+            return Word.NO_POSITION;
+
+        }
+
+        final int positionHead;
+        final int positionRear;
+
+        positionHead = headWord.positionWord(word);
+        positionRear = rearWord.positionWord(word);
+
+        if(positionHead == Word.HEAD_POSITION) {
+            return positionHead;
+
+        }
+
+        if(positionRear == Word.REAR_POSITION) {
+            return positionRear;
+        }
+
+        return Word.NO_POSITION;
+    }
+
+    public boolean playableDeck(final WordDeck deck) {
+
+        return deck.stream()
+                .anyMatch(word -> canPlayWord(word) != Word.NO_POSITION);
     }
 
 }
