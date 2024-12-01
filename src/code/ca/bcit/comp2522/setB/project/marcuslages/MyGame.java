@@ -1,21 +1,19 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 public class MyGame
         implements TextGame, Resettable {
 
     private static final int HAND_SIZE = 7;
 
     private final WordPile deck;
+    private final WordBoard board;
     private final WordHand userHand;
     private final WordHand botHand;
 
     public MyGame() {
 
         deck = new WordPile();
+        board = new WordBoard(deck.draw());
         userHand = new WordHand(deck, HAND_SIZE);
         botHand = new WordHand(deck, HAND_SIZE);
 
@@ -46,7 +44,6 @@ public class MyGame
 
 //        do {
             renderGame();
-            // Display both decks and table
             // Player chooses which word to play
             // Checks if card exists, if so passes it down to the table
             // If table accepts it, draws card from user and shows his points
@@ -78,7 +75,6 @@ public class MyGame
                 .append(botHand)
                 .append(System.lineSeparator())
                 .append("You: ")
-                .append(System.lineSeparator())
                 .append(userHand)
                 .append(System.lineSeparator());
 

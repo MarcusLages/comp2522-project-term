@@ -25,6 +25,18 @@ public abstract class WordDeck {
         }
     }
 
+    protected void addHead(final Word word) {
+
+        if(word != null) {
+            deck.addFirst(word);
+
+        }
+    }
+
+    protected void addRear(final Word word) {
+        add(word);
+    }
+
     public Word draw(final int index) {
 
         return deck.remove(index);
@@ -49,6 +61,11 @@ public abstract class WordDeck {
     public Word draw() {
 
         return deck.removeLast();
+    }
+
+    public boolean contains(final Word word) {
+
+        return deck.contains(word);
     }
 
     public boolean isEmpty() {
