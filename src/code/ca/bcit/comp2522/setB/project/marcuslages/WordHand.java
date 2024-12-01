@@ -6,6 +6,11 @@ public class WordHand extends WordDeck {
         super();
     }
 
+    public WordHand(final WordDeck drawingDeck) {
+        super();
+        drawAll(drawingDeck);
+    }
+
     public WordHand(final WordDeck drawingDeck,
                     final int initialHandSize) {
 
@@ -30,11 +35,29 @@ public class WordHand extends WordDeck {
 
     }
 
+    public void drawAll(final WordDeck drawingDeck) {
+
+        if(drawingDeck == null) {
+            throw new IllegalArgumentException("Invalid drawingDeck. Pile is null.");
+        }
+
+        while(!drawingDeck.isEmpty()) {
+
+            super.add(drawingDeck.draw());
+        }
+    }
+
     public void reset(final WordDeck drawingDeck,
                       final int drawSize) {
 
         super.clear();
         drawFrom(drawingDeck, drawSize);
+    }
+
+    public void reset(final WordDeck drawingDeck) {
+
+        super.clear();
+        drawAll(drawingDeck);
     }
 
 }

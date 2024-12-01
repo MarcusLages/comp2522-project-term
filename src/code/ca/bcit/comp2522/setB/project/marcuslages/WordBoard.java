@@ -42,7 +42,7 @@ public class WordBoard extends WordDeck {
         rearWord = initialWord;
     }
 
-    private int canPlayWord(final Word word) {
+    public int canPlayWord(final Word word) {
 
         if(super.contains(word)) {
             return Word.NO_POSITION;
