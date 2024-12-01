@@ -5,20 +5,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MyGame
-        implements Game, Resettable {
+        implements TextGame, Resettable {
 
     private static final int HAND_SIZE = 7;
 
     private final WordPile deck;
-    private final List<Word> userHand;
-    private final List<Word> botHand;
+    private final WordHand userHand;
+    private final WordHand botHand;
 
     public MyGame() {
 
         deck = new WordPile();
-        userHand = new ArrayList<>();
-        botHand = new ArrayList<>();
-
+        userHand = new WordHand(deck, HAND_SIZE);
+        botHand = new WordHand(deck, HAND_SIZE);
 
     }
 
@@ -30,7 +29,7 @@ public class MyGame
         do {
            startMatch();
 
-        } while(!stopMatch());
+        } while(!TextGame.stopMatch());
 
     }
 
@@ -43,7 +42,7 @@ public class MyGame
         startGame();
     }
 
-    private void startMatch() {
+    public void startMatch() {
 
         do {
             // Display both decks and table
@@ -59,49 +58,8 @@ public class MyGame
 
         }
 
-        System.out.println("Your score was: " + score);
-
-    }
-
-    // TODO: Pass this to a TextGame interface
-    /**
-     * Function that receives user input and checks if the user
-     * wants to stop playing or not.
-     *
-     * @return true if user wants to stop playing
-     */
-    private static boolean stopMatch() {
-
-        final Scanner sc;
-
-        sc = InputScanner.getInstance();
-
-        do {
-            final String input;
-
-            System.out.println("Would you like to play again?");
-
-            // TODO: TEST SC.HASNEXT()
-            if(sc.hasNext()) {
-                input = sc.nextLine();
-
-                // To avoid scanner error
-//            sc.nextLine();
-
-                if(input.equalsIgnoreCase("yes") ||
-                        input.equalsIgnoreCase("y")) {
-
-                    return false;
-
-                } else if(input.equalsIgnoreCase("no") ||
-                        input.equalsIgnoreCase("n")) {
-
-                    return true;
-
-                }
-            }
-
-        } while (true);
+        // TODO: Print score.
+//        System.out.println("Your score was: " + score);
 
     }
 

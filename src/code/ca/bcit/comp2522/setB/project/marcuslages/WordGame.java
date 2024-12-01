@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class WordGame
-        implements Game {
+        implements TextGame {
 
     private static final int FIRST_QUESTION = 1;
     private static final int LAST_QUESTION = 10;
@@ -36,13 +36,14 @@ public class WordGame
         do {
             startMatch();
 
-        } while (!stopMatch());
+        } while (!TextGame.stopMatch());
 
     }
 
     /**
      * Starts a single match of the WordGame.
      */
+    @Override
     public void startMatch() {
         int questionNumber = FIRST_QUESTION;
 
@@ -64,47 +65,6 @@ public class WordGame
         } catch (final IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    /**
-     * Function that receives user input and checks if the user
-     * wants to stop playing or not.
-     *
-     * @return true if user wants to stop playing
-     */
-    private static boolean stopMatch() {
-
-        final Scanner sc;
-
-        sc = InputScanner.getInstance();
-
-        do {
-            final String input;
-
-            System.out.println("Would you like to play again?");
-
-            // TODO: TEST SC.HASNEXT()
-            if(sc.hasNext()) {
-                input = sc.nextLine();
-
-                // To avoid scanner error
-//            sc.nextLine();
-
-                if(input.equalsIgnoreCase("yes") ||
-                        input.equalsIgnoreCase("y")) {
-
-                    return false;
-
-                } else if(input.equalsIgnoreCase("no") ||
-                        input.equalsIgnoreCase("n")) {
-
-                    return true;
-
-                }
-            }
-
-        } while (true);
 
     }
 
