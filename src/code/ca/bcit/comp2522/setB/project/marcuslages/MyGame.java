@@ -27,8 +27,8 @@ public class MyGame
         System.out.println("Welcome to Word Domino's.");
 
         do {
-//           startMatch();
-//
+           startMatch();
+
         } while(!TextGame.stopMatch());
 
     }
@@ -45,6 +45,7 @@ public class MyGame
     public void startMatch() {
 
 //        do {
+            renderGame();
             // Display both decks and table
             // Player chooses which word to play
             // Checks if card exists, if so passes it down to the table
@@ -61,6 +62,27 @@ public class MyGame
         // TODO: Print score.
 //        System.out.println("Your score was: " + score);
 
+    }
+
+    private void renderGame() {
+
+        final StringBuilder sb;
+        sb = new StringBuilder();
+
+        sb.append("-----------------------")
+                .append(System.lineSeparator())
+                .append("Board: ")
+                .append(deck)
+                .append(System.lineSeparator())
+                .append("House: ")
+                .append(botHand)
+                .append(System.lineSeparator())
+                .append("You: ")
+                .append(System.lineSeparator())
+                .append(userHand)
+                .append(System.lineSeparator());
+
+        System.out.println(sb);
     }
 
 }
