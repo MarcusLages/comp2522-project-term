@@ -34,13 +34,9 @@ public class WordGame
         System.out.println("Welcome to the WordGame." + System.lineSeparator());
 
         do {
-
             startMatch();
-            if(stopMatch()) {
-                break;
-            }
 
-        } while(true);
+        } while (!stopMatch());
 
     }
 
