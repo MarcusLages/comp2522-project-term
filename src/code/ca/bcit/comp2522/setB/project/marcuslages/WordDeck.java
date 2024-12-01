@@ -1,82 +1,84 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Objects;
 
-public class WordDeck extends Deck {
+public abstract class WordDeck {
 
-    private static final String wordsFilename = "my-game-words";
+    private static final int WORD_NOT_FOUND = -1;
+    protected static final int FIRST_WORD = 0;
+
+    private final List<Word> deck;
 
     public WordDeck() {
 
-        refillDeck();
+        deck = new ArrayList<>();
     }
 
-    public void drawTo(final Deck deck,
-                     final int drawSize) {
+    protected void add(final Word word) {
 
-        if(deck == null) {
-            throw new IllegalArgumentException("Invalid deck. Deck is null.");
-        }
+        if(word != null) {
+            deck.add(word);
 
-        for(int i = FIRST_WORD; i < drawSize; i++) {
-
-            if(!super.isEmpty()) {
-                deck.add(super.draw());
-
-            }
         }
     }
 
-    public void refillDeck() {
+    public Word draw(final int index) {
 
-        if(!super.isEmpty()) {
-            super.clear();
+        return deck.remove(index);
+    }
+
+    public Word draw(final String word) {
+
+        final Word searchedWord;
+        final int searchedWordIdx;
+
+        searchedWord = new Word(word);
+        searchedWordIdx = deck.indexOf(searchedWord);
+
+        if(searchedWordIdx == WORD_NOT_FOUND) {
+            return null;
 
         }
 
-        final Path wordsFilepath;
-        wordsFilepath = getWordsFilepath();
-
-        if(Files.exists(wordsFilepath)) {
-
-            final List<String> wordList;
-
-            try {
-                wordList = Files.readAllLines(wordsFilepath);
-                getFilteredStream(wordList)
-                        .map(str -> new Word(str.trim()))
-                        .forEach(super::add);
-
-            } catch (final IOException e) {
-
-                throw new RuntimeException("Txt file was not found." +
-                        e.getMessage());
-            }
-        }
-
-        super.shuffle();
-
+        return draw(searchedWordIdx);
     }
 
-    private static Path getWordsFilepath() {
+    public Word draw() {
 
-        final Path resourceFolder;
-        final Path wordsFilepath;
-
-        resourceFolder = Paths.get("src", "resources");
-        wordsFilepath = resourceFolder.resolve(wordsFilename + ".txt");
-
-        return wordsFilepath;
+        return deck.removeLast();
     }
 
-    private static Stream<String> getFilteredStream(final List<String> list) {
-        return list.stream()
-                .filter(str -> str != null && !str.isBlank());
+    public boolean isEmpty() {
+
+        return deck.isEmpty();
+    }
+
+    public void clear() {
+
+        deck.clear();
+    }
+
+    public void shuffle() {
+
+        Collections.shuffle(deck);
+    }
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb;
+        sb = new StringBuilder();
+
+        sb.append("[ ");
+        deck.stream()
+                .filter(Objects::nonNull)
+                .forEach(word -> sb.append(word).append(" "));
+        sb.append("]");
+
+        return sb.toString();
     }
 
 }

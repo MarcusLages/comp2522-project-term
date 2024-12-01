@@ -9,13 +9,13 @@ public class MyGame
 
     private static final int HAND_SIZE = 7;
 
-    private final WordDeck deck;
+    private final WordPile deck;
     private final List<Word> userHand;
     private final List<Word> botHand;
 
     public MyGame() {
 
-        deck = new WordDeck();
+        deck = new WordPile();
         userHand = new ArrayList<>();
         botHand = new ArrayList<>();
 
