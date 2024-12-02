@@ -97,7 +97,6 @@ public class NumberGame extends Application
         header = new Label("Number: " + currentNumber);
         root = new VBox(header, grid.getGridPane());
 
-        // TODO: MAGIC NUMBER
         return new Scene(root, WINDOW_WIDTH,WINDOW_HEIGHT);
     }
 
