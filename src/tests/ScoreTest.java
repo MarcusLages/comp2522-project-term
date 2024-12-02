@@ -1,4 +1,4 @@
-import ca.bcit.comp2522.setB.project.marcuslages.Score;
+import ca.bcit.comp2522.setB.project.marcuslages.wordgame.Score;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
