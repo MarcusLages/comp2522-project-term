@@ -3,6 +3,14 @@ package ca.bcit.comp2522.setB.project.marcuslages;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Represents the main logic of the Word Domino's game. A game which
+ * the user needs to use words like domino blocks and append them
+ * to each word like the japanese game, Shiritori.
+ *
+ * @author Marcus Vinicius Santos Lages
+ * @version 1.0
+ */
 public class MyGame
         implements TextGame, Resettable {
 
@@ -16,28 +24,39 @@ public class MyGame
 
     private boolean giveUp;
 
+    /**
+     * Constructs a new instance of MyGame with default values.
+     */
     public MyGame() {
 
         deck = new WordPile();
         board = new WordBoard(deck.draw());
         userHand = new WordHand(deck, USER_HAND_SIZE);
 
+        // Ensures that the first hand the user has is always playable,
+        // or else, it draws from the deck again.
         while(!board.playableDeck(userHand)) {
+
             userHand.reset(deck, USER_HAND_SIZE);
         }
 
+        // The bot receives all the leftover cards.
         botHand = new WordHand(deck);
         score = new MyGameScore();
         giveUp = false;
 
     }
 
+    /**
+     * Starts the game and repeatedly plays matches until the user chooses to stop.
+     */
     @Override
     public void startGame() {
 
         System.out.println("Welcome to Word Domino's.");
 
         do {
+
            startMatch();
            reset();
 
@@ -45,6 +64,10 @@ public class MyGame
 
     }
 
+    /**
+     * Resets the game to its initial state, including resetting the deck, board,
+     * and both user and bot hands.
+     */
     @Override
     public void reset() {
 
@@ -52,6 +75,7 @@ public class MyGame
         board.reset(deck.draw());
 
         do {
+
             userHand.reset(deck, USER_HAND_SIZE);
 
         } while (!board.playableDeck(userHand));
@@ -60,37 +84,44 @@ public class MyGame
         giveUp = false;
     }
 
+    /**
+     * Starts a new match, where the user and bot take turns playing cards.
+     * The match continues until there are no moves left or the user gives up.
+     */
     public void startMatch() {
 
         renderGame();
 
         do {
+
             userRound();
 
             if(!giveUp) {
+
                 renderGame();
                 botRound();
                 renderGame();
 
             }
-            // Checks if card exists, if so passes it down to the table
-            // If table accepts it, draws card from user and shows his points
-            // If not, makes the user write it again
 
         } while(!noMoves() && !giveUp);
 
         if(userHand.isEmpty()) {
+
             System.out.println("YOU WIN!");
 
         } else {
-            System.out.println("YOU LOST!");
 
+            System.out.println("YOU LOST!");
         }
 
         score.displayScore();
 
     }
 
+    /**
+     * Renders the current state of the game, displaying the board, user hand, and remaining typing chances.
+     */
     private void renderGame() {
 
         final StringBuilder sb;
@@ -111,9 +142,14 @@ public class MyGame
         System.out.println(sb);
     }
 
+    /**
+     * Handles the user's turn, where the user selects a word to play, and the
+     * game checks if it's valid. If the user gives up, the game ends.
+     */
     private void userRound() {
 
         do {
+
             final Word userWord;
             userWord = getWordInput();
 
@@ -140,14 +176,17 @@ public class MyGame
                 break;
 
             } else {
-                System.out.println("Please enter a valid word.");
 
+                System.out.println("Please enter a valid word.");
             }
 
         } while(true);
 
     }
 
+    /**
+     * Handles the bot's turn. The bot will attempt to play a valid word if possible.
+     */
     private void botRound() {
 
         final Optional<Word> optionalWord;
@@ -165,12 +204,19 @@ public class MyGame
             botHand.draw(word);
 
         } else {
+
             System.out.println("The house did not place any card." +
                     System.lineSeparator());
         }
     }
 
+    /**
+     * Prompts the user to input a word and returns the corresponding Word object.
+     *
+     * @return Word object representing the user's input.
+     */
     private static Word getWordInput() {
+
         final Scanner sc;
         final String userInput;
         final Word userWord;
@@ -186,7 +232,13 @@ public class MyGame
 
     }
 
+    /**
+     * Checks if there are no valid moves left for both the user and the bot.
+     *
+     * @return true if no moves are available
+     */
     private boolean noMoves() {
+
         return !board.playableDeck(userHand) &&
                 (!score.typeChancesLeft() ||
                 !board.playableDeck(botHand));

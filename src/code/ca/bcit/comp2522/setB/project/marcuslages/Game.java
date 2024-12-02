@@ -12,6 +12,6 @@ public interface Game {
     /**
      * Method used to start the overall game.
      */
-    public abstract void startGame();
+    void startGame();
 
 }

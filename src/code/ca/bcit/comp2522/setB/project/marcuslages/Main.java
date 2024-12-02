@@ -25,12 +25,13 @@ public class Main {
         Game game;
 
         do {
+
             input = getInput();
             game = GameFactory.getGame(input);
 
             if(game != null) {
-                game.startGame();
 
+                game.startGame();
             }
 
         } while(input != GameFactory.QUIT_CHAR);
@@ -53,6 +54,7 @@ public class Main {
         sc = InputScanner.getInstance();
 
         do {
+
             System.out.print("-----------------------\n" +
                     "Please choose a game to play:\n" +
                     GameFactory.WORD_GAME_CHAR + "/" +
@@ -66,10 +68,12 @@ public class Main {
                     "Game: ");
 
             if(sc.hasNext()) {
+
                 input = sc.next().charAt(FIRST_CHAR_IDX);
                 input = Character.toLowerCase(input);
 
                 if(!GameFactory.validGameChar(input)) {
+
                     System.out.println("-----------------------\n" +
                             "Invalid input.\n" +
                             "-----------------------\n");

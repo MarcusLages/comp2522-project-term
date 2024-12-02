@@ -17,6 +17,7 @@ public final class InputScanner {
 
     // Statically initializes the Scanner(System.in) only once.
     static {
+
          instance = new Scanner(System.in);
     }
 
@@ -30,6 +31,7 @@ public final class InputScanner {
      * @return instance of Scanner(System.in)
      */
     public static Scanner getInstance() {
+
         return instance;
     }
 
@@ -37,6 +39,7 @@ public final class InputScanner {
      * Closes the Scanner.
      */
     public static void close() {
+
         instance.close();
     }
 
