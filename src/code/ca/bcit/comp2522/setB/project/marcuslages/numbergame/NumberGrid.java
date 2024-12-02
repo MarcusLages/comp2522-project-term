@@ -5,7 +5,6 @@ import ca.bcit.comp2522.setB.project.marcuslages.Resettable;
 import java.util.Arrays;
 import java.util.Random;
 
-// TODO: CHECK FOR PRIVATE, FINALS AND ETC.
 /**
  * NumberGrid is an abstract class that represents a grid of numbers for a game
  * where values are placed within a grid and must adhere to certain rules

@@ -72,7 +72,9 @@ public class ButtonGrid extends NumberGrid {
                 row = i;
                 col = j;
 
-                // TODO: explain algorithm
+                // When the button is pressed, it checks if the value can
+                // be inserted and if so, decreases the amount of empty
+                // spots and executes the event listener on gridListener.
                 button.setOnAction(e -> {
 
                     if(placeValue(currentValue, row, col)) {
@@ -173,7 +175,6 @@ public class ButtonGrid extends NumberGrid {
      */
     private int getFloor(final int value) {
 
-        // TODO: explain algorithm
         final int widthX;
         final int heightY;
         int floor;
@@ -247,6 +248,7 @@ public class ButtonGrid extends NumberGrid {
                     smallerNumBefore(ceil)) {
 
                 break;
+
             }
 
             ceil--;

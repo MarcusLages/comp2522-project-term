@@ -68,6 +68,7 @@ public class NumberGame extends Application
      */
     @Override
     public void startGame() {
+
         Application.launch(args);
     }
 
@@ -122,12 +123,18 @@ public class NumberGame extends Application
         score.incrementPlacement();
 
         if(grid.isGameEnd(currentNumber)) {
-            endGame();
 
+            endGame();
         }
     }
 
+    /**
+     * Function activated when the game is finished, displaying the current
+     * score of the user and asking if they would like to quit or
+     * continue playing.
+     */
     private void endGame() {
+
         final Alert confirmPopup;  // Set confirmPopup type
         final Optional<ButtonType> result;
 
@@ -135,6 +142,7 @@ public class NumberGame extends Application
         result = confirmPopup.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
+
             reset();
 
         } else {
@@ -149,6 +157,14 @@ public class NumberGame extends Application
 
     }
 
+    /**
+     * Helper function used to create an Alert popup with the score of the user,
+     * information if they won/lost and asking if they would like to continue.
+     *
+     * @param score current score of the user
+     * @param win   true if the user won the current game
+     * @return      Alert popup with all the information
+     */
     private static Alert getConfirmationPopUp(final NumberGameScore score,
                                               final boolean win) {
 
@@ -156,19 +172,28 @@ public class NumberGame extends Application
         popup = new Alert(Alert.AlertType.CONFIRMATION);
 
         if(win) {
+
             popup.setTitle("You win!");
             score.incrementWins();
 
         } else {
-            popup.setTitle("You lost!");
 
+            popup.setTitle("You lost!");
         }
+
         popup.setHeaderText("Would you like to play again?");
         popup.setContentText(score + "\nClick OK to restart or Cancel to exit.");
 
         return popup;
     }
 
+    /**
+     * Helper function used to create an Alert popup with the score of the user
+     * after the game is finished.
+     *
+     * @param score current score of the user
+     * @return      Alert popup with all the information
+     */
     private static Alert getExitPopup(final NumberGameScore score) {
 
         final Alert popup;
@@ -181,6 +206,9 @@ public class NumberGame extends Application
         return popup;
     }
 
+    /**
+     * Function used to reset the game to its initial state.
+     */
     @Override
     public void reset() {
 
