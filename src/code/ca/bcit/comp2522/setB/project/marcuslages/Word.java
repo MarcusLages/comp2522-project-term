@@ -16,9 +16,15 @@ public class Word {
     public static final int NO_POSITION = 0;
     public static final int REAR_POSITION = 1;
 
+    public static final Word GIVE_UP;
+
     private final String word;
     private final char head;
     private final char rear;
+
+    static {
+        GIVE_UP = new Word("give up");
+    }
 
     public Word(final String word) {
         validateWord(word);

@@ -14,6 +14,8 @@ public class MyGame
     private final WordHand botHand;
     private final MyGameScore score;
 
+    private boolean giveUp;
+
     public MyGame() {
 
         deck = new WordPile();
@@ -21,11 +23,12 @@ public class MyGame
         userHand = new WordHand(deck, USER_HAND_SIZE);
 
         while(!board.playableDeck(userHand)) {
-            userHand.reset(deck);
+            userHand.reset(deck, USER_HAND_SIZE);
         }
 
         botHand = new WordHand(deck);
         score = new MyGameScore();
+        giveUp = false;
 
     }
 
@@ -47,12 +50,14 @@ public class MyGame
 
         deck.reset();
         board.reset(deck.draw());
-        botHand.reset(deck, USER_HAND_SIZE);
 
         do {
             userHand.reset(deck, USER_HAND_SIZE);
 
         } while (!board.playableDeck(userHand));
+
+        botHand.reset(deck);
+        giveUp = false;
     }
 
     public void startMatch() {
@@ -61,14 +66,18 @@ public class MyGame
 
         do {
             userRound();
-            renderGame();
-            botRound();
-            renderGame();
+
+            if(!giveUp) {
+                renderGame();
+                botRound();
+                renderGame();
+
+            }
             // Checks if card exists, if so passes it down to the table
             // If table accepts it, draws card from user and shows his points
             // If not, makes the user write it again
 
-        } while(board.playableDeck(userHand));
+        } while(!noMoves() && !giveUp);
 
         if(userHand.isEmpty()) {
             System.out.println("YOU WIN!");
@@ -78,7 +87,7 @@ public class MyGame
 
         }
 
-        System.out.println("Your score was: " + score);
+        score.displayScore();
 
     }
 
@@ -94,6 +103,9 @@ public class MyGame
                 .append(System.lineSeparator())
                 .append("You: ")
                 .append(userHand)
+                .append(System.lineSeparator())
+                .append("Typing chances left: ")
+                .append(score.getTypeChances())
                 .append(System.lineSeparator());
 
         System.out.println(sb);
@@ -109,8 +121,22 @@ public class MyGame
                     board.playWord(userWord)) {
 
                 userHand.draw(userWord);
-                score.increaseRightWords();
+                score.increaseCardPoints();
 
+                break;
+
+            } else if(score.typeChancesLeft() &&
+                    botHand.contains(userWord) &&
+                    board.playWord(userWord)) {
+
+                botHand.draw(userWord);
+                score.increaseTypePoints();
+
+                break;
+
+            } else if(userWord.equals(Word.GIVE_UP)) {
+
+                giveUp = true;
                 break;
 
             } else {
@@ -158,6 +184,12 @@ public class MyGame
 
         return userWord;
 
+    }
+
+    private boolean noMoves() {
+        return !board.playableDeck(userHand) &&
+                (!score.typeChancesLeft() ||
+                !board.playableDeck(botHand));
     }
 
 }
