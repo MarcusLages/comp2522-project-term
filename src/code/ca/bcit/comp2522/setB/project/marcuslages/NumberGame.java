@@ -31,6 +31,7 @@ public class NumberGame extends Application
 
     // Command line arguments used for setting up javafx
     private final String[] args;
+    private final NumberGameScore score;
 
     private ButtonGrid grid;
     private Label header;
@@ -42,6 +43,7 @@ public class NumberGame extends Application
     public NumberGame() {
 
         this.args = null;
+        score = new NumberGameScore();
         currentNumber = NumberGrid.getRandomNumber();
     }
 
@@ -53,6 +55,7 @@ public class NumberGame extends Application
     public NumberGame(final String[] args) {
 
         this.args = args;
+        score = new NumberGameScore();
         currentNumber = NumberGrid.getRandomNumber();
     }
 
@@ -113,30 +116,47 @@ public class NumberGame extends Application
     }
 
     private void endGame() {
-        final Alert popup;  // Set popup type
+        final Alert confirmPopup;  // Set confirmPopup type
         final Optional<ButtonType> result;
 
-        popup = getConfirmationPopUp();
-        result = popup.showAndWait();
+        confirmPopup = getConfirmationPopUp(score);
+        result = confirmPopup.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
             reset();
 
         } else {
+
+            final Alert exitPopup;
+            exitPopup = getExitPopup(score);
+
+            exitPopup.showAndWait();
             Platform.exit();
 
         }
 
     }
 
-    private static Alert getConfirmationPopUp() {
+    private static Alert getConfirmationPopUp(final NumberGameScore score) {
 
         final Alert popup;
         popup = new Alert(Alert.AlertType.CONFIRMATION);
 
-        popup.setTitle("Try Again?");
+        popup.setTitle("You lost!");
         popup.setHeaderText("Would you like to play again?");
-        popup.setContentText("Click OK to restart or Cancel to exit.");
+        popup.setContentText(score + "\nClick OK to restart or Cancel to exit.");
+
+        return popup;
+    }
+
+    private static Alert getExitPopup(final NumberGameScore score) {
+
+        final Alert popup;
+        popup = new Alert(Alert.AlertType.INFORMATION);
+
+        popup.setTitle("Exit");
+        popup.setHeaderText(null);
+        popup.setContentText(score.toString());
 
         return popup;
     }
