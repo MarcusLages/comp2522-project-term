@@ -80,8 +80,14 @@ public class Country {
      *
      * @param country given Country which the Question will be based on
      * @return Question about the country
+     * @throws IllegalArgumentException if country is null
      */
     public static Question getCountryQuestion(final Country country) {
+
+        if(country == null) {
+
+            throw new IllegalArgumentException("Invalid country.");
+        }
 
         final int questionType;
         questionType = getRandomQuestionType();

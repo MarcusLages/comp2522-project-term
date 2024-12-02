@@ -1,0 +1,7 @@
+I used AI to help me build some concepts and give me the structure and documentation of some parts of the project.
+Using JavaFX was the hardest part to adapt as a new technology, so I feel like AI helped me
+a lot on how to properly use it. The only problem was just that since AI never had a big
+picture of the program (and even when it had), it left me wandering in how to properly fix some errors.
+I used AI briefly also to help create the idea of my game, which I asked to create something based
+on shiritori (a japanese word game) and it gave me the idea of domino, so I used that.
+Nonetheless, I never just copy and pasted anything from AI (besides some parts of documentation).

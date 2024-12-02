@@ -1,0 +1,43 @@
+Lesson 1 (Foundations):
+    Throughout the whole project with conventions, validation in all
+    the constructors, private in all the instance variables and symbolic constants (such as in Word.java), etc.
+
+Lesson 2 (Inherintance, Polymorphism, Error Handling):
+    Inherintance: WordBoard, WordHand and WordPile extending WordDeck
+    Polymorphism: all Games implementing Game interface and being used as just interfaces
+                  in Main by executing .startGame()
+    Error Handling: try catching IOExceptions in WordPile and throwing errors in Word.java validate function
+
+Lesson 3 (Abstract classes):
+    WordDeck is an abstract class.
+
+Lesson 4 (Interfaces):
+    GridListener, Game, Resettable and TextGame interfaces were used by many classes such as
+    MyGame, ButtonGrid, etc.
+
+Lesson 5 (Collections):
+    WordDeck has a List of Words which is frequently handled.
+
+Lesson 6 (Generics):
+    Used again by the List of Words in WordDeck.
+
+Lesson 7 (Functional interfaces, lambda and method references):
+    GridListener is a functional interface.
+    They were also used, alongside lambda and method references on stream handling of the list of words
+    in WordDeck and others such as WordPile for transforming a list of String into a list of Word objects
+    with mapping with lambda and forEach with method reference.
+
+Lesson 8 (IO, Path, Files and Streaming):
+    Used in WordPile for reading from a file with Path/Files and transforming the list of lines into a
+    list of Word objects.
+
+Lesson 9 (GUI):
+    No GUI used in MyGame.
+
+Lesson 10 (Unit Testing):
+    No Unit Testing used in MyGame.
+
+Lesson 11 (Design Patterns):
+    InputScanner class used a Singleton strategy to enable the use of one Scanner(System.in).
+    Game interface and GameFactory class used a Factory strategy to enable the creation of the specific
+    game object based on the user's input.

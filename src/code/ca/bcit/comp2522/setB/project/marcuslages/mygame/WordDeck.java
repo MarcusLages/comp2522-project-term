@@ -49,8 +49,8 @@ public abstract class WordDeck {
     protected void addHead(final Word word) {
 
         if(word != null) {
-            deck.addFirst(word);
 
+            deck.addFirst(word);
         }
     }
 
@@ -60,6 +60,7 @@ public abstract class WordDeck {
      * @param word the word to add to the rear of the deck.
      */
     protected void addRear(final Word word) {
+
         add(word);
     }
 
@@ -89,8 +90,8 @@ public abstract class WordDeck {
         searchedWordIdx = deck.indexOf(searchedWord);
 
         if(searchedWordIdx == WORD_NOT_FOUND) {
-            return null;
 
+            return null;
         }
 
         return draw(searchedWordIdx);
@@ -108,8 +109,8 @@ public abstract class WordDeck {
         searchedWordIdx = deck.indexOf(word);
 
         if(searchedWordIdx == WORD_NOT_FOUND) {
-            return null;
 
+            return null;
         }
 
         return draw(searchedWordIdx);

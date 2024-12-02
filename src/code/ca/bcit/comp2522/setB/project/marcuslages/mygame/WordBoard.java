@@ -16,10 +16,12 @@ public class WordBoard extends WordDeck {
      * Constructs a `WordBoard` object with an initial word placed on the board.
      *
      * @param initialWord the initial word to place on the board.
+     * @throws IllegalArgumentException if initialWord is null.
      */
     public WordBoard(final Word initialWord) {
 
         super();
+        validateWord(initialWord);
         reset(initialWord);
     }
 
@@ -110,6 +112,19 @@ public class WordBoard extends WordDeck {
 
         return deck.stream()
                 .anyMatch(word -> canPlayWord(word) != Word.NO_POSITION);
+    }
+
+    /**
+     * Helper function to validate word so it is not null.
+     *
+     * @param word Word to be validated
+     */
+    private static void validateWord(final Word word) {
+
+        if(word == null) {
+
+            throw new IllegalArgumentException("Word not valid.");
+        }
     }
 
 }

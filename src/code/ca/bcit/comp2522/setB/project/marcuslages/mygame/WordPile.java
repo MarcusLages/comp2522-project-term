@@ -38,8 +38,8 @@ public class WordPile extends WordDeck
     public void reset() {
 
         if(!super.isEmpty()) {
-            super.clear();
 
+            super.clear();
         }
 
         final Path wordsFilepath;
@@ -50,6 +50,7 @@ public class WordPile extends WordDeck
             final List<String> wordList;
 
             try {
+
                 wordList = Files.readAllLines(wordsFilepath);
                 getFilteredStream(wordList)
                         .map(str -> new Word(str.trim()))
@@ -89,6 +90,7 @@ public class WordPile extends WordDeck
      * @return a stream of non-null, non-blank strings.
      */
     private static Stream<String> getFilteredStream(final List<String> list) {
+
         return list.stream()
                 .filter(str -> str != null && !str.isBlank());
     }
