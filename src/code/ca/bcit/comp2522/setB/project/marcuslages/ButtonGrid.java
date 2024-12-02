@@ -1,7 +1,10 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 /**
  * ButtonGrid is a class that represents a grid of buttons for
@@ -16,6 +19,9 @@ public class ButtonGrid extends NumberGrid {
     // Used to access the last element of array.
     // Use array.length - ARRAY_OFFSET
     private static final int ARRAY_OFFSET = 1;
+    private static final double GRID_PADDING = 10;
+    private static final double BUTTON_HEIGHT = 70.0;
+    private static final double BUTTON_WIDTH = 90.0;
 
     private final GridPane gridPane;
     private final Button[][] buttonGrid;
@@ -36,7 +42,7 @@ public class ButtonGrid extends NumberGrid {
 
         super(gridSizeX, gridSizeY);
 
-        gridPane = new GridPane();
+        gridPane = createGridPane();
         buttonGrid = new Button[gridSizeX][gridSizeY];
         this.gridListener = gridListener;
 
@@ -138,6 +144,10 @@ public class ButtonGrid extends NumberGrid {
                 final int col;
 
                 button = new Button(" ");
+                button.setMinHeight(BUTTON_HEIGHT);
+                button.setMinWidth(BUTTON_WIDTH);
+                button.setFont(new Font(NumberGame.FONT_SIZE));
+
                 row = i;
                 col = j;
 
@@ -189,6 +199,21 @@ public class ButtonGrid extends NumberGrid {
         if(value >= MIN_VAL && value <= MAX_VAL) {
             currentValue = value;
         }
+    }
+    
+    private GridPane createGridPane() {
+        
+        final GridPane grid;
+        grid = new GridPane();
+
+        grid.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        grid.setPadding(new Insets(GRID_PADDING));
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(GRID_PADDING);
+        grid.setVgap(GRID_PADDING);
+
+        return grid;
+
     }
 
     /**

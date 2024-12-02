@@ -2,11 +2,13 @@ package ca.bcit.comp2522.setB.project.marcuslages;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -24,8 +26,9 @@ import java.util.Optional;
 public class NumberGame extends Application
         implements Game, Resettable {
 
-    private static final int WINDOW_HEIGHT = 200;
-    private static final int WINDOW_WIDTH = 300;
+    public static final int FONT_SIZE = 24;
+    private static final int WINDOW_HEIGHT = 450;
+    private static final int WINDOW_WIDTH = 550;
     private static final int BUTTON_GRID_Y = 5;
     private static final int BUTTON_GRID_X = 5;
 
@@ -84,6 +87,7 @@ public class NumberGame extends Application
         scene = getScene();
 
         stage.setTitle("Number game");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -98,7 +102,13 @@ public class NumberGame extends Application
         final VBox root;
 
         header = new Label("Number: " + currentNumber);
+        header.setFont(new Font(FONT_SIZE));
+
         root = new VBox(header, grid.getGridPane());
+
+        root.setAlignment(Pos.TOP_CENTER);
+        VBox.setVgrow(grid.getGridPane(), javafx.scene.layout.Priority.ALWAYS);
+        root.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         return new Scene(root, WINDOW_WIDTH,WINDOW_HEIGHT);
     }
