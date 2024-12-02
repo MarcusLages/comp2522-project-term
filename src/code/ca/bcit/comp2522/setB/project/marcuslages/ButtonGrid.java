@@ -83,9 +83,14 @@ public class ButtonGrid extends NumberGrid {
      * @return      true if the game is lost, given the value
      */
     @Override
-    public boolean isGameLost(final int value) {
+    public boolean isGameEnd(final int value) {
 
-        // TODO: explaing algorithm
+        if(super.noEmptySpots()) {
+            return true;
+
+        }
+
+        // TODO: explain algorithm
         final int floor;
         final int ceil;
 
@@ -105,7 +110,7 @@ public class ButtonGrid extends NumberGrid {
     public boolean isInValidInterval(final int x,
                                      final int y) {
 
-        // TODO: explaing algorithm
+        // TODO: explain algorithm
         final int floor;
         final int ceil;
         final int linearIdx;
@@ -136,15 +141,17 @@ public class ButtonGrid extends NumberGrid {
                 row = i;
                 col = j;
 
-                // TODO: explaing algorithm
+                // TODO: explain algorithm
                 button.setOnAction(e -> {
 
                     if(placeValue(currentValue, row, col)) {
 
                         button.setText("" + currentValue);
+                        decreaseEmptySpots();
 
                         if(gridListener != null) {
                             gridListener.onNumberPlaced();
+
                         }
                     }
                 });
@@ -161,6 +168,7 @@ public class ButtonGrid extends NumberGrid {
      */
     @Override
     public void reset() {
+
         super.reset();
 
         if(buttonGrid != null && gridPane != null) {

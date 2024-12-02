@@ -108,8 +108,9 @@ public class NumberGame extends Application
         currentNumber = NumberGrid.getRandomNumber();
         grid.setCurrentValue(currentNumber);
         header.setText("Number: " + currentNumber);
+        score.incrementPlacement();
 
-        if(grid.isGameLost(currentNumber)) {
+        if(grid.isGameEnd(currentNumber)) {
             endGame();
 
         }
@@ -119,7 +120,7 @@ public class NumberGame extends Application
         final Alert confirmPopup;  // Set confirmPopup type
         final Optional<ButtonType> result;
 
-        confirmPopup = getConfirmationPopUp(score);
+        confirmPopup = getConfirmationPopUp(score, grid.noEmptySpots());
         result = confirmPopup.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -137,12 +138,19 @@ public class NumberGame extends Application
 
     }
 
-    private static Alert getConfirmationPopUp(final NumberGameScore score) {
+    private static Alert getConfirmationPopUp(final NumberGameScore score,
+                                              final boolean win) {
 
         final Alert popup;
         popup = new Alert(Alert.AlertType.CONFIRMATION);
 
-        popup.setTitle("You lost!");
+        if(win) {
+            popup.setTitle("You win!");
+
+        } else {
+            popup.setTitle("You lost!");
+
+        }
         popup.setHeaderText("Would you like to play again?");
         popup.setContentText(score + "\nClick OK to restart or Cancel to exit.");
 
@@ -163,8 +171,11 @@ public class NumberGame extends Application
 
     @Override
     public void reset() {
+
         grid.reset();
         newCurrentNumber();
+        score.incrementGames();
+
     }
 
 }

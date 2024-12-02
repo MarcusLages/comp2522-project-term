@@ -2,7 +2,9 @@ package ca.bcit.comp2522.setB.project.marcuslages;
 
 public class NumberGameScore {
 
-    private static int INITAL_PLACEMENT_NUMBER = 0;
+    // This value gets added beforehand on NumberGame.newCurrentNumber,
+    // so we have to set it to -1
+    private static int INITAL_PLACEMENT_NUMBER = -1;
     private static int INITAL_WINS = 0;
     private static int INITAL_NUM_OF_GAMES = 1;
 
@@ -15,6 +17,21 @@ public class NumberGameScore {
         numberPlacements = INITAL_PLACEMENT_NUMBER;
         totalGames = INITAL_NUM_OF_GAMES;
         wins = INITAL_WINS;
+    }
+
+    public void incrementPlacement() {
+        numberPlacements++;
+
+    }
+
+    public void incrementGames() {
+        totalGames++;
+
+    }
+
+    public void incrementWins() {
+        wins++;
+
     }
 
     public double getAveragePlacements() {

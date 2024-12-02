@@ -21,6 +21,8 @@ public abstract class NumberGrid
     protected static final int MIN_VAL = 1;
     protected static final int MAX_VAL = 1000;
 
+    private int emptySpots;
+
     // TODO: Change this to private
     protected final int[][] numberGrid;
 
@@ -37,7 +39,6 @@ public abstract class NumberGrid
         reset();
     }
 
-
     /**
      * Resets the grid by making all cells EMPTY.
      * This method should be called when the grid needs to be cleared.
@@ -48,6 +49,8 @@ public abstract class NumberGrid
         for(int i = FIRST_NUM; i < numberGrid.length; i++) {
             Arrays.fill(numberGrid[i], EMPTY);
         }
+
+        emptySpots = numberGrid.length * numberGrid[FIRST_NUM].length;
     }
 
     /**
@@ -64,6 +67,18 @@ public abstract class NumberGrid
         num = random.nextInt(MAX_VAL - MIN_VAL) + MIN_VAL;
 
         return num;
+    }
+
+    protected void decreaseEmptySpots() {
+
+        if(emptySpots > EMPTY) {
+            emptySpots--;
+        }
+    }
+
+    public boolean noEmptySpots() {
+
+        return emptySpots == EMPTY;
     }
 
     /**
@@ -83,9 +98,9 @@ public abstract class NumberGrid
      * the current state of the grid according to the game's rules.
      * This method needs to be implemented by subclasses to define the game's loss logic.
      *
-     * @param value value to check for a loss condition.
+     * @param value value to check for a loss/end condition.
      * @return      true if the value cannot be placed in the grid
      */
-    public abstract boolean isGameLost(final int value);
+    public abstract boolean isGameEnd(final int value);
 
 }
