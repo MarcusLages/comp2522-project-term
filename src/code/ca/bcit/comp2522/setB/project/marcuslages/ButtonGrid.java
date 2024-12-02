@@ -81,8 +81,8 @@ public class ButtonGrid extends NumberGrid {
                         decreaseEmptySpots();
 
                         if(gridListener != null) {
-                            gridListener.onNumberPlaced();
 
+                            gridListener.onNumberPlaced();
                         }
                     }
                 });
@@ -126,6 +126,7 @@ public class ButtonGrid extends NumberGrid {
     public void setCurrentValue(final int value) {
 
         if(value >= MIN_VAL && value <= MAX_VAL) {
+
             currentValue = value;
         }
     }
@@ -196,7 +197,7 @@ public class ButtonGrid extends NumberGrid {
             // If there's no more blocks or if the next block is larger,
             // returns the current number as the floor.
             if(numberGrid[floorX][floorY] == EMPTY &&
-                largerNumAfter(floor)) {
+                    largerNumAfter(floor)) {
 
                 break;
             }
@@ -360,7 +361,6 @@ public class ButtonGrid extends NumberGrid {
 
             gridPane.getChildren().clear();
             initializeButtonGrid();
-
         }
     }
 
@@ -382,7 +382,6 @@ public class ButtonGrid extends NumberGrid {
                 (y < FIRST_NUM || y > numberGrid[FIRST_NUM].length)) {
 
             return false;
-
         }
 
         // Only inserts into the grid if the grid is EMPTY and if
@@ -407,17 +406,19 @@ public class ButtonGrid extends NumberGrid {
     public boolean isGameEnd(final int value) {
 
         if(super.noEmptySpots()) {
-            return true;
 
+            return true;
         }
 
-        // TODO: explain algorithm
         final int floor;
         final int ceil;
 
         floor = getFloor(value);
         ceil = getCeil(value);
 
+        // Similar to check for placement, we check for possible floor
+        // and possible ceiling. If the floor happens to be larger than
+        // the ceiling (which is impossible), then the game is lost.
         return floor > ceil;
     }
 

@@ -49,6 +49,7 @@ public class Country {
      * @return name of the country
      */
     public String getName() {
+
         return name;
     }
 
@@ -58,6 +59,7 @@ public class Country {
      * @return capital city of the country
      */
     public String getCapitalCityName() {
+
         return capitalCityName;
     }
 
@@ -68,6 +70,7 @@ public class Country {
      * @return array of facts about the country
      */
     public String[] getFacts() {
+
         return facts;
     }
 
@@ -84,6 +87,7 @@ public class Country {
         questionType = getRandomQuestionType();
 
         switch(questionType) {
+
             case QUESTION_A:
                 return countryFromCapitalQuestion(country);
 
@@ -131,6 +135,7 @@ public class Country {
 
     // Helper function to choose a random question type.
     private static int getRandomQuestionType() {
+
         final Random randomGenerator;
         randomGenerator = new Random();
 
@@ -139,6 +144,7 @@ public class Country {
 
     // Helper function that creates a Question about what is the name of the Country from its capital.
     private static Question countryFromCapitalQuestion(final Country country) {
+
         final String question;
         question = "Which country has " + country.capitalCityName + " as its capital?";
 
@@ -147,6 +153,7 @@ public class Country {
 
     // Helper function that creates a Question about what is the capital of a given Country.
     private static Question capitalQuestion(final Country country) {
+
         final String question;
         question = "What is the capital of " + country.name + "?";
 
@@ -155,6 +162,7 @@ public class Country {
 
     // Helper function that creates a Question about one of the facts of a country.
     private static Question countryFactsQuestion(final Country country) {
+
         final String question;
         final int randFactIdx;
         final Random randomGenerator;
@@ -174,14 +182,17 @@ public class Country {
                                  final String[] facts) {
 
         if(name == null || name.isBlank()) {
+
             throw new IllegalArgumentException("Invalid name: " + name);
         }
 
         if(capitalCityName == null || capitalCityName.isBlank()) {
+
             throw new IllegalArgumentException("Invalid capitalCityName: " + capitalCityName);
         }
 
         if(facts == null) {
+
             throw new IllegalArgumentException("Facts array cannot be null.");
         }
 
