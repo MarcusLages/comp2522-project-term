@@ -55,7 +55,7 @@ public class Score {
     static {
 
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DEFAULT_SCORE_FILEPATH = Paths.get("test_score.txt");
+        DEFAULT_SCORE_FILEPATH = Paths.get("score.txt");
     }
 
     /**

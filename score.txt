@@ -1,0 +1,21 @@
+Date and Time: 2024-12-01 20:47:00
+Games Played: 1
+Correct First Attempts: 0
+Correct Second Attempts: 0
+Incorrect Attempts: 10
+Score: 0 points
+
+Date and Time: 2024-12-01 20:47:00
+Games Played: 2
+Correct First Attempts: 1
+Correct Second Attempts: 0
+Incorrect Attempts: 19
+Score: 2 points
+
+Date and Time: 2024-12-01 20:49:44
+Games Played: 1
+Correct First Attempts: 2
+Correct Second Attempts: 0
+Incorrect Attempts: 8
+Score: 4 points
+
