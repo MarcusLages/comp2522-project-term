@@ -1,7 +1,8 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.wordgame;
+
+import ca.bcit.comp2522.setB.project.marcuslages.TextGame;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Class that represents a WordGame about countries.
@@ -22,6 +23,7 @@ public class WordGame
      * Creates a WordGame object from scratch.
      */
     public WordGame() {
+
         score = new Score();
     }
 
@@ -34,6 +36,7 @@ public class WordGame
         System.out.println("Welcome to the WordGame." + System.lineSeparator());
 
         do {
+
             startMatch();
 
         } while (!TextGame.stopMatch());
@@ -45,9 +48,11 @@ public class WordGame
      */
     @Override
     public void startMatch() {
+
         int questionNumber = FIRST_QUESTION;
 
         do {
+
             System.out.println("\nQuestion #" + questionNumber + ":");
             askQuestion();
             questionNumber++;
@@ -60,9 +65,11 @@ public class WordGame
         System.out.println(score);
 
         try {
+
             Score.appendScoreToFile(score, Score.DEFAULT_SCORE_FILEPATH);
 
         } catch (final IOException e) {
+
             e.printStackTrace();
         }
 
@@ -73,6 +80,7 @@ public class WordGame
      * document the user Score.
      */
     private void askQuestion() {
+
         final Country country;
         final Question question;
         int questionAttempt;
@@ -81,12 +89,15 @@ public class WordGame
         question = Country.getCountryQuestion(country);
         questionAttempt = FIRST_ATTEMPT;
 
-        do{
+        do {
+
             if(!question.ask()) {
+
                 System.out.println("INCORRECT!");
                 questionAttempt++;
 
             } else {
+
                 System.out.println("CORRECT!");
                 break;
 
@@ -104,13 +115,16 @@ public class WordGame
                                          final Score score) {
 
         if(questionAttempt == FIRST_ATTEMPT) {
+
             score.increaseNumCorrectFirstAttempt();
 
         } else if(questionAttempt > LAST_ATTEMPT) {
+
             System.out.println("The answer was " + question.getAnswer() + System.lineSeparator());
             score.increaseIncorrectTwoAttempts();
 
         } else {
+
             score.increaseNumCorrectSecondAttempt();
         }
     }

@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.numbergame;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

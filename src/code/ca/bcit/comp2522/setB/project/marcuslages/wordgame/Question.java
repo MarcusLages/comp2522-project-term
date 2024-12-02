@@ -1,4 +1,6 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.wordgame;
+
+import ca.bcit.comp2522.setB.project.marcuslages.InputScanner;
 
 import java.util.Scanner;
 
@@ -36,6 +38,7 @@ public class Question {
      * @return question being asked
      */
     public String getQuestion(){
+
         return question;
     }
 
@@ -45,6 +48,7 @@ public class Question {
      * @return answer for the question
      */
     public String getAnswer(){
+
         return answer;
     }
 
@@ -55,6 +59,7 @@ public class Question {
      * @return true if the user's answer is right
      */
     public boolean ask() {
+
         final Scanner sc;
         final String userInput;
 
@@ -75,15 +80,22 @@ public class Question {
     public boolean isCorrectAnswer(final String answer) {
 
         if(answer == null || answer.isBlank()) {
+
             return false;
         }
 
         return this.answer.equalsIgnoreCase(answer.trim());
     }
 
-    // Validates qa to not be null or blank
+    /**
+     * Validates qa to not be null or blank.
+     *
+     * @param qa question or answer as String
+     */
     private static void validateQA(final String qa) {
+
         if(qa == null || qa.isBlank()) {
+
             throw new IllegalArgumentException("Invalid question/answer. Input: " + qa);
         }
     }

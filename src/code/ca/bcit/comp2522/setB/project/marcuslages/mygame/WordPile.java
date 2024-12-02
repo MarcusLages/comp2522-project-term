@@ -1,4 +1,6 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.mygame;
+
+import ca.bcit.comp2522.setB.project.marcuslages.Resettable;
 
 import java.io.IOException;
 import java.nio.file.Files;

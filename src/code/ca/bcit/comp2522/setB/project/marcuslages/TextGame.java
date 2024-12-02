@@ -2,8 +2,18 @@ package ca.bcit.comp2522.setB.project.marcuslages;
 
 import java.util.Scanner;
 
+/**
+ * Interface responsible to standardize the common functions among
+ * text games, such as starting and stopping one match.
+ *
+ * @author Marcus Vinicius Santos Lages
+ * @version 1.0
+ */
 public interface TextGame extends Game {
 
+    /**
+     * Starts a match of the given game.
+     */
     void startMatch();
 
     /**

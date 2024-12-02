@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.mygame;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.wordgame;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,6 +31,7 @@ public final class World {
 
     // Creates the countryMap HashMap and populates it with all the countries.
     static {
+
         countryMap = new HashMap<>();
         populateCountryMap();
     }
@@ -75,8 +76,8 @@ public final class World {
             currentFilepath = folderPath.resolve(filenameTxtExtension);
 
             if(Files.exists(currentFilepath)) {
-                parseCountriesToMap(currentFilepath);
 
+                parseCountriesToMap(currentFilepath);
             }
 
         }
@@ -98,6 +99,7 @@ public final class World {
 
                 // Skip empty lines between entries
                 if (lines.get(currentLine).trim().isEmpty()) {
+
                     currentLine++;
                     continue;
                 }
@@ -127,6 +129,7 @@ public final class World {
             }
 
         } catch (final IOException e) {
+
             throw new RuntimeException(e);
         }
     }

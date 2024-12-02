@@ -1,4 +1,6 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.numbergame;
+
+import ca.bcit.comp2522.setB.project.marcuslages.Resettable;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -23,7 +25,6 @@ public abstract class NumberGrid
 
     private int emptySpots;
 
-    // TODO: Change this to private
     protected final int[][] numberGrid;
 
     /**
@@ -47,6 +48,7 @@ public abstract class NumberGrid
     public void reset() {
 
         for(int i = FIRST_NUM; i < numberGrid.length; i++) {
+
             Arrays.fill(numberGrid[i], EMPTY);
         }
 
@@ -69,13 +71,22 @@ public abstract class NumberGrid
         return num;
     }
 
+    /**
+     * Function used to decrease the count of the amount of empty spots in the grid.
+     */
     protected void decreaseEmptySpots() {
 
         if(emptySpots > EMPTY) {
+
             emptySpots--;
         }
     }
 
+    /**
+     * Checks and returns true if there's no more empty spots in the number grid.
+     *
+     * @return true if there's no more empty spots in the grid
+     */
     public boolean noEmptySpots() {
 
         return emptySpots == EMPTY;

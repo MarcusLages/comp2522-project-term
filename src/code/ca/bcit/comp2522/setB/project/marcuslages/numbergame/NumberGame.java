@@ -1,5 +1,7 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.numbergame;
 
+import ca.bcit.comp2522.setB.project.marcuslages.Game;
+import ca.bcit.comp2522.setB.project.marcuslages.Resettable;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -13,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
-// TODO: CHECK FOR PRIVATE, FINALS AND ETC.
 /**
  * NumberGame is a JavaFX-based game where players place numbers in a grid,
  * aiming to maintain ascending order. The game tracks player progress and offers
@@ -156,6 +157,7 @@ public class NumberGame extends Application
 
         if(win) {
             popup.setTitle("You win!");
+            score.incrementWins();
 
         } else {
             popup.setTitle("You lost!");

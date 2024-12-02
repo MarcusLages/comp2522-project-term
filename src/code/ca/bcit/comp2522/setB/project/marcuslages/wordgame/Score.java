@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.wordgame;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -53,6 +53,7 @@ public class Score {
     // Initializes the date formatter in a static initializer,
     // since it will be the same for all objects.
     static {
+
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         DEFAULT_SCORE_FILEPATH = Paths.get("test_score.txt");
     }
@@ -204,8 +205,13 @@ public class Score {
 
     }
 
-    // Function used parse a block (list of String lines) into a Score object,
-    // getting the right information from each line.
+    /**
+     * Function used parse a block (list of String lines) into a Score object,
+     * getting the right information from each line.
+     *
+     * @param block block of lines that will be read
+     * @return Score object correspondent to the block
+     */
     private static Score parseStringBlock(final List<String> block) {
 
         final Score score;
@@ -227,8 +233,13 @@ public class Score {
         return score;
     }
 
-    // Helper function to parse a String line from a Score file into a LocalDateTime
-    // with the format based on the formatter object: "yyyy-MM-dd HH:mm:ss".
+    /**
+     * Helper function to parse a String line from a Score file into a LocalDateTime
+     * with the format based on the formatter object: "yyyy-MM-dd HH:mm:ss".
+     *
+     * @param dateTimeLine String with information about the date and time
+     * @return date and time parsed from the String
+     */
     private static LocalDateTime parseDateTime(final String dateTimeLine) {
 
         final LocalDateTime dateTime;
@@ -241,8 +252,14 @@ public class Score {
         return dateTime;
     }
 
-    // Helper function to parse an integer data (int) from a String line from a Score file.
+    /**
+     * Helper function to parse an integer data (int) from a String line from a Score file.
+     *
+     * @param dataLine String with integer data
+     * @return integer data parsed from the String
+     */
     private static int parseLineIntData(final String dataLine) {
+
         final int data;
         final String dataStr;
 
@@ -260,6 +277,7 @@ public class Score {
      * @return String representing the date and time the game was played.
      */
     public String getDateTimePlayedStr() {
+
         return dateTimePlayedStr;
     }
 
@@ -269,6 +287,7 @@ public class Score {
      * @return LocalDateTime object representing when the game was played.
      */
     public LocalDateTime getDateTimePlayed() {
+
         return dateTimePlayed;
     }
 
@@ -278,6 +297,7 @@ public class Score {
      * @return number of incorrect attempts before a correct second attempt.
      */
     public int getNumIncorrectTwoAttempts() {
+
         return numIncorrectTwoAttempts;
     }
 
@@ -285,6 +305,7 @@ public class Score {
      * Increments the number of incorrect attempts made before achieving success on the second try.
      */
     public void increaseIncorrectTwoAttempts() {
+
         numIncorrectTwoAttempts++;
     }
 
@@ -294,6 +315,7 @@ public class Score {
      * @return number of correct answers on the second attempt.
      */
     public int getNumCorrectSecondAttempt() {
+
         return numCorrectSecondAttempt;
     }
 
@@ -301,6 +323,7 @@ public class Score {
      * Increments the number of correct answers given on the second attempt.
      */
     public void increaseNumCorrectSecondAttempt() {
+
         numCorrectSecondAttempt++;
     }
 
@@ -310,6 +333,7 @@ public class Score {
      * @return number of correct answers on the first attempt.
      */
     public int getNumCorrectFirstAttempt() {
+
         return numCorrectFirstAttempt;
     }
 
@@ -317,6 +341,7 @@ public class Score {
      * Increments the number of correct answers given on the first attempt.
      */
     public void increaseNumCorrectFirstAttempt() {
+
         numCorrectFirstAttempt++;
     }
 
@@ -326,6 +351,7 @@ public class Score {
      * @return total number of games played.
      */
     public int getNumGamesPlayed() {
+
         return numGamesPlayed;
     }
 
@@ -333,6 +359,7 @@ public class Score {
      * Increments the total number of games played.
      */
     public void increaseNumGamesPlayed() {
+
         numGamesPlayed++;
     }
 
@@ -343,6 +370,7 @@ public class Score {
      * @return how many points the user got in the game
      */
     public int getScore() {
+
         return numCorrectFirstAttempt * FIRST_ATTEMPT_POINTS +
             numCorrectSecondAttempt * SECOND_ATTEMPT_POINTS;
     }
@@ -382,9 +410,17 @@ public class Score {
         return sb.toString();
     }
 
-    // Validates the score input so dateTimePlayed is not null or in the future,
-    // numGamesPlayed is greater or equal to MIN_GAME_COUNT and numCorrectFirstAttempt,
-    // numCorrectSecondAttempt and numIncorrectTwoAttempts are greater or equal to MIN_ATTEMPT_VALUE.
+    /**
+     * Validates the score input so dateTimePlayed is not null or in the future,
+     * numGamesPlayed is greater or equal to MIN_GAME_COUNT and numCorrectFirstAttempt,
+     * numCorrectSecondAttempt and numIncorrectTwoAttempts are greater or equal to MIN_ATTEMPT_VALUE.
+     *
+     * @param dateTimePlayed            date and time of the match
+     * @param numGamesPlayed            number of matches played in a row
+     * @param numCorrectFirstAttempt    number of attempts right on first try
+     * @param numCorrectSecondAttempt   number of attempts right on second try
+     * @param numIncorrectTwoAttempts   number of incorrect attempts
+     */
     private static void validateScore(final LocalDateTime dateTimePlayed,
                                       final int numGamesPlayed,
                                       final int numCorrectFirstAttempt,
@@ -392,11 +428,13 @@ public class Score {
                                       final int numIncorrectTwoAttempts) {
 
         if(dateTimePlayed == null) {
+
             throw new IllegalArgumentException("Invalid LocalDateTime. " +
                     "Date for Score cannot be null.");
         }
 
         if(dateTimePlayed.isAfter(LocalDateTime.now())) {
+
             throw new IllegalArgumentException("Invalid LocalDateTime. " +
                     "Date for Score cannot be in the future. " +
                     "LocalDateTime: " + dateTimePlayed.format(formatter));
@@ -404,6 +442,7 @@ public class Score {
         }
 
         if(numGamesPlayed < MIN_GAME_COUNT) {
+
             throw new IllegalArgumentException("Invalid numGamesPlayed. " +
                     "Must be greater than " + MIN_GAME_COUNT +
                     ". numGamesPlayed: " + numGamesPlayed);
@@ -411,6 +450,7 @@ public class Score {
         }
 
         if(numCorrectFirstAttempt < MIN_ATTEMPT_VALUE) {
+
             throw new IllegalArgumentException("Invalid numCorrectFirstAttempt. " +
                     "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numCorrectFirstAttempt: " + numGamesPlayed);
@@ -418,6 +458,7 @@ public class Score {
         }
 
         if(numCorrectSecondAttempt < MIN_ATTEMPT_VALUE) {
+
             throw new IllegalArgumentException("Invalid numCorrectSecondAttempt. " +
                     "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numCorrectSecondAttempt: " + numGamesPlayed);
@@ -425,6 +466,7 @@ public class Score {
         }
 
         if(numIncorrectTwoAttempts < MIN_ATTEMPT_VALUE) {
+
             throw new IllegalArgumentException("Invalid numIncorrectTwoAttempts. " +
                     "Must be greater than " + MIN_ATTEMPT_VALUE +
                     ". numIncorrectTwoAttempts: " + numGamesPlayed);

@@ -1,4 +1,8 @@
-package ca.bcit.comp2522.setB.project.marcuslages;
+package ca.bcit.comp2522.setB.project.marcuslages.mygame;
+
+import ca.bcit.comp2522.setB.project.marcuslages.InputScanner;
+import ca.bcit.comp2522.setB.project.marcuslages.Resettable;
+import ca.bcit.comp2522.setB.project.marcuslages.TextGame;
 
 import java.util.Optional;
 import java.util.Scanner;

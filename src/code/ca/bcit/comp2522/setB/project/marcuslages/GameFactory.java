@@ -1,5 +1,9 @@
 package ca.bcit.comp2522.setB.project.marcuslages;
 
+import ca.bcit.comp2522.setB.project.marcuslages.mygame.MyGame;
+import ca.bcit.comp2522.setB.project.marcuslages.numbergame.NumberGame;
+import ca.bcit.comp2522.setB.project.marcuslages.wordgame.WordGame;
+
 /**
  * Factory utility class used to create a Game based on
  * the GameInterface.
