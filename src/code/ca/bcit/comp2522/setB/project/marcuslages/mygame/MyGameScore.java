@@ -12,7 +12,7 @@ public class MyGameScore {
     private static final int CARD_POINTS = 3;
     private static final int TYPE_POINTS = 1;
     private static final int INITIAL_WORDS = 0;
-    private static final int INITIAL_TYPE_CHANCES = 5;
+    private static final int INITIAL_TYPE_CHANCES = 10;
     private static final int NO_CHANCES = 0;
 
     private int points;

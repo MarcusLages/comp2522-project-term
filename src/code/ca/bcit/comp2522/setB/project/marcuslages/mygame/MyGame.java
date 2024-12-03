@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class MyGame
         implements TextGame, Resettable {
 
-    private static final int USER_HAND_SIZE = 15;
+    private static final int USER_HAND_SIZE = 10;
 
     private final WordPile deck;
     private final WordBoard board;
@@ -103,8 +103,8 @@ public class MyGame
             if(!giveUp) {
 
                 renderGame();
-                botRound();
-                renderGame();
+//                botRound();
+//                renderGame();
 
             }
 
@@ -222,13 +222,23 @@ public class MyGame
     private static Word getWordInput() {
 
         final Scanner sc;
-        final String userInput;
         final Word userWord;
+
+        String userInput = null;
 
         sc = InputScanner.getInstance();
 
         System.out.print("Card to play: ");
-        userInput = sc.nextLine();
+
+        do {
+            userInput = sc.nextLine();
+
+            if(userInput.trim().isBlank()) {
+                userInput = null;
+
+            }
+
+        } while(userInput == null);
 
         userWord = new Word(userInput);
 
